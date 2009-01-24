@@ -1,0 +1,40 @@
+V0.1 - Developer-forum release
+
+V1.0 - First Android Market release
+
+TODO:
+- Implement onMeasure()?
+- Add "solved" detection
+- Add Copyright info to XML files
+- Create dynamic layout with menus / buttons
+- Replace MapDesigns with a saner construct (the current version _hurts_ to look at)
+- Move colors into resources
+- Name unnamed numeric constants
+- Implement state save / restore
+- Add all level designs from http://clickmazes.com/newtilt/ixtilt2d.htm
+- Add icon for every level design
+- Add UI functionality
+	- Add menu / buttons
+		- Level selection
+		- Enable/disable accelerometer ("Tilt sensor" or simply "Tilt")
+	- Add "high-scores" functionality (score = number of steps)
+- Make the UI nicer
+	- Replace filled circle with proper bitmap
+	- Replace walls with bitmaps
+	- Replace background with bitmaps
+- Add proper logging
+- Refactor: move game logic out of TiltMazesMainView into a separate class
+- Maybe we could do away with only BOTTOM and RIGHT walls (if boundaries are already handled as walls), but it's not that important
+
+Bugs:
+- If started in landscape mode, the acceleration vector is not (always) corrected for rotation
+
+
+V1.1 - Bugfix release
+
+V2.0 - New features release
+- Add support for tilt puzzles: http://clickmazes.com/newtilt/ixtilt.htm
+
+V3.0
+- Add support for hexa-roll: http://clickmazes.com/spin/ixspin.htm
+
