@@ -37,213 +37,208 @@ import java.util.TimerTask;
 import android.os.SystemClock;
 
 public class Ball {
-	private TiltMazesView parentView;
+	private TiltMazesView mParentView;
 	
-	private float x = 0;
-	private float y = 0;
-	private int x_target;
-	private int y_target;
-	private int v_x = 0;
-	private int v_y = 0;
-	private float v = 0.005f; // Speed
+	private float mX = 0;
+	private float mY = 0;
+	private int mXTarget;
+	private int mYTarget;
+	private int mVX = 0;
+	private int mVY = 0;
+	private static float SPEED_MULTIPLIER = 0.005f; // Speed
 	
-	private long t1;
-	private long t2;
-    private float dt;
-    private static final int dt_target = 1000/25; // Target time step (ms)
-    private Timer timer;
+	private long mT1;
+	private long mT2;
+    private static final int DT_TARGET = 1000/25; // Target time step (ms)
+    private Timer mTimer;
 
-    private Map map;
+    private Map mMap;
 	
-	private boolean isRolling = false;
-	private Direction rollDirection = Direction.NONE;
+	private boolean mIsRolling = false;
+	private Direction mRollDirection = Direction.NONE;
 	
 	public Ball(TiltMazesView view, Map map, int init_x, int init_y) {
-		parentView = view;
-		this.map = map; 
-		x = init_x;
-		y = init_y;
-		x_target = init_x;
-		y_target = init_y;
+		mParentView = view;
+		mMap = map; 
+		mX = init_x;
+		mY = init_y;
+		mXTarget = init_x;
+		mYTarget = init_y;
+	}
+	
+	public void setMap(Map map) {
+		mMap = map;
 	}
 
 	public boolean isRolling() {
-		return isRolling;
+		return mIsRolling;
 	}
 	
 	private boolean isValidMove(int x, int y, Direction dir) {
 		switch (dir) {
-			case LEFT: {
-				// Left wall
-				if (x <= 0) return false;
-				if ((map.getWalls(x, y) & Wall.LEFT) > 0 ||
-					(map.getWalls(x - 1, y) & Wall.RIGHT) > 0	
-					) return false;
-				break;
-			}
-			case RIGHT:{
-				// Right wall
-				if (x >= map.getSizeX() - 1) return false;
-				if ((map.getWalls(x, y) & Wall.RIGHT) > 0 ||
-					(map.getWalls(x + 1, y) & Wall.LEFT) > 0	
-					) return false;
-				break;
-			}
-			case UP:   {
-				// Top wall
-				if (y <= 0) return false;
-				if ((map.getWalls(x, y) & Wall.TOP) > 0 ||
-					(map.getWalls(x, y - 1) & Wall.BOTTOM) > 0	
-					) return false;
-				break;
-			}
-			case DOWN: {
-				// Bottom wall
-				if (y >= map.getSizeY() - 1) return false;
-				if ((map.getWalls(x, y) & Wall.BOTTOM) > 0 ||
-					(map.getWalls(x, y + 1) & Wall.TOP) > 0	
-					) return false;
-				break;
-			}		
+		case LEFT:
+			// Left wall
+			if (x <= 0) return false;
+			if ((mMap.getWalls(x, y) & Wall.LEFT) > 0 ||
+				(mMap.getWalls(x - 1, y) & Wall.RIGHT) > 0	
+				) return false;
+			break;
+		case RIGHT:
+			// Right wall
+			if (x >= mMap.getSizeX() - 1) return false;
+			if ((mMap.getWalls(x, y) & Wall.RIGHT) > 0 ||
+				(mMap.getWalls(x + 1, y) & Wall.LEFT) > 0	
+				) return false;
+			break;
+		case UP:
+			// Top wall
+			if (y <= 0) return false;
+			if ((mMap.getWalls(x, y) & Wall.TOP) > 0 ||
+				(mMap.getWalls(x, y - 1) & Wall.BOTTOM) > 0	
+				) return false;
+			break;
+		case DOWN:
+			// Bottom wall
+			if (y >= mMap.getSizeY() - 1) return false;
+			if ((mMap.getWalls(x, y) & Wall.BOTTOM) > 0 ||
+				(mMap.getWalls(x, y + 1) & Wall.TOP) > 0	
+				) return false;
+			break;
 		}
 		
 		return true;
 	}
 
-	
 	public synchronized void roll(Direction dir) {
 		// Don't accept another roll command if the ball is already rolling
-		if (isRolling) return;
+		if (mIsRolling) return;
 
 		// Set speed according to commanded direction
 		switch (dir) {
-			case LEFT: { v_x = -1; v_y =  0; break;}
-			case RIGHT:{ v_x =  1; v_y =  0; break;}
-			case UP:   { v_x =  0; v_y = -1; break;}
-			case DOWN: { v_x =  0; v_y =  1; break;}
+		case LEFT: { mVX = -1; mVY =  0; break;}
+		case RIGHT:{ mVX =  1; mVY =  0; break;}
+		case UP:   { mVX =  0; mVY = -1; break;}
+		case DOWN: { mVX =  0; mVY =  1; break;}
 		}
 		
 		// Calculate target position
-		x_target = Math.round(x);
-		y_target = Math.round(y);
-		while (isValidMove(x_target, y_target, dir)) {
-			x_target = x_target + v_x;
-			y_target = y_target + v_y;
+		mXTarget = Math.round(mX);
+		mYTarget = Math.round(mY);
+		while (isValidMove(mXTarget, mYTarget, dir)) {
+			mXTarget = mXTarget + mVX;
+			mYTarget = mYTarget + mVY;
 		}
 
 		// We can't move
-		if (x_target == x && y_target == y) return;
+		if (mXTarget == mX && mYTarget == mY) return;
 		
 		// Let's roll...
-		isRolling = true;
-		rollDirection = dir;
+		mIsRolling = true;
+		mRollDirection = dir;
 
 		// Schedule animation		
-		t1 = SystemClock.elapsedRealtime();
+		mT1 = SystemClock.elapsedRealtime();
 		TimerTask simTask = new TimerTask() {
 			public void run() {
 				doStep();
 			}
 		};
-		timer = new Timer(true);
-		timer.schedule(simTask, 0, dt_target);
+		mTimer = new Timer(true);
+		mTimer.schedule(simTask, 0, DT_TARGET);
 	}
 	
 	private void doStep() {
 		// Calculate elapsed time since last step
-		t2 = SystemClock.elapsedRealtime();
-		dt = (float)(t2 - t1);
-		t1 = t2;
+		mT2 = SystemClock.elapsedRealtime();
+		float dt = (float)(mT2 - mT1);
+		mT1 = mT2;
 
 		// Calculate next position
-		float xNext = x + v_x * v * dt;
-		float yNext = y + v_y * v * dt;
+		float xNext = mX + mVX * SPEED_MULTIPLIER * dt;
+		float yNext = mY + mVY * SPEED_MULTIPLIER * dt;
 
 		// Check if we have reached the target position
 		boolean reachedTarget = false;
-		switch (rollDirection) {
+		switch (mRollDirection) {
 		case LEFT:
-			if (xNext <= 1f * x_target) {
-				xNext = x_target;
+			if (xNext <= 1f * mXTarget) {
+				xNext = mXTarget;
 				reachedTarget = true;
 			}
 			break;
 		case RIGHT:
-			if (xNext >= 1f * x_target) {
-				xNext = x_target;
+			if (xNext >= 1f * mXTarget) {
+				xNext = mXTarget;
 				reachedTarget = true;
 			}
 			break;
 		case UP:
-			if (yNext <= 1f * y_target) {
-				yNext = y_target;
+			if (yNext <= 1f * mYTarget) {
+				yNext = mYTarget;
 				reachedTarget = true;
 			}
 			break;
 		case DOWN:
-			if (yNext > 1f * y_target) {
-				yNext = y_target;
+			if (yNext > 1f * mYTarget) {
+				yNext = mYTarget;
 				reachedTarget = true;
 			}
 			break;
 		}
 			
-    	x = xNext;
-		y = yNext;			 
+    	mX = xNext;
+		mY = yNext;			 
 
 		// Check if we have reached a goal
-		if (map.getGoal(Math.round(x), Math.round(y)) == 1) {
-			map.removeGoal(Math.round(x), Math.round(y));
-			// TODO
-			// Send MSG_REACHED_GOAL message to the parent View
-			// (maybe add number of remaining goals here?)
-			parentView.sendEmptyMessage(Messages.MSG_REACHED_GOAL);
+		if (mMap.getGoal(Math.round(mX), Math.round(mY)) == 1) {
+			// FIXME(leczbalazs): maybe it's not the Ball's repsonibility to actually remove
+			// the goal from the map
+			mMap.removeGoal(Math.round(mX), Math.round(mY));
+			mParentView.sendEmptyMessage(Messages.MSG_REACHED_GOAL);
 		}
 		
 		// Stop rolling if we have reached the target position
 		if (reachedTarget) {
-			rollDirection = Direction.NONE;
-			v_x = 0;
-			v_y = 0;
-			isRolling = false;
-			timer.cancel();
+			mRollDirection = Direction.NONE;
+			mVX = 0;
+			mVY = 0;
+			mIsRolling = false;
+			mTimer.cancel();
 
-			// TODO
 			// Send MSG_REACHED_WALL message to the parent View
-			parentView.sendEmptyMessage(Messages.MSG_REACHED_WALL);
+			mParentView.sendEmptyMessage(Messages.MSG_REACHED_WALL);
 		}
 		
 		// Send invalidate message to the parent View,
 		// so that it gets redrawn during the next cycle.
-		parentView.postInvalidate();
+		mParentView.postInvalidate();
 	}
 	
 	public Direction getRollDirection() {
-		return rollDirection;
+		return mRollDirection;
 	}
 	
 	public float getX() {
-		return x;
+		return mX;
 	}	
 
 	public float getY() {
-		return y;
+		return mY;
 	}
 	
 	public void setX(float x) {
-		this.x = x;
+		this.mX = x;
 	}
 	
 	public void setY(float y) {
-		this.y = y;
+		this.mY = y;
 	}
 	
 	public float getXTarget() {
-		return x_target;
+		return mXTarget;
 	}	
 
 	public float getYTarget() {
-		return y_target;
+		return mYTarget;
 	}
-	
 }

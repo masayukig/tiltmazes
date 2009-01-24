@@ -40,10 +40,12 @@ import android.view.WindowManager;
 
 
 public class TiltMazesActivity extends Activity {
-	private TiltMazesView view;
+	private TiltMazesView mView;
 	
 	private static final int MENU_RESTART = 1;
-
+	private static final int MENU_MAP_PREV = 2;
+	private static final int MENU_MAP_NEXT = 3;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,26 +54,34 @@ public class TiltMazesActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		view = new TiltMazesView(getApplicationContext(), this);
-		view.setFocusable(true);
-		setContentView(view);
+		mView = new TiltMazesView(getApplicationContext(), this);
+		mView.setFocusable(true);
+		setContentView(mView);
 	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
+        menu.add(0, MENU_MAP_PREV, 0, R.string.menu_map_prev);
         menu.add(0, MENU_RESTART, 0, R.string.menu_restart);
-
+        menu.add(0, MENU_MAP_NEXT, 0, R.string.menu_map_next);
+        
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case MENU_RESTART:
-            	view.sendEmptyMessage(Messages.MSG_RESTART);
-                return true;
+        case MENU_RESTART:
+        	mView.sendEmptyMessage(Messages.MSG_RESTART);
+            return true;
+        case MENU_MAP_PREV:
+        	mView.sendEmptyMessage(Messages.MSG_MAP_PREVIOUS);
+            return true;
+        case MENU_MAP_NEXT:
+        	mView.sendEmptyMessage(Messages.MSG_MAP_NEXT);
+            return true;        	
         }
         
         return false;
@@ -80,18 +90,18 @@ public class TiltMazesActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		view.registerListener();
+		mView.registerListener();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		view.unregisterListener();
+		mView.unregisterListener();
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle icicle) {
 		super.onSaveInstanceState(icicle);
-		view.unregisterListener();
+		mView.unregisterListener();
 	}
 }

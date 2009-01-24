@@ -3,11 +3,11 @@ V0.1 - Developer-forum release
 V1.0 - First Android Market release
 
 TODO:
+- Add "About" menu item with copyright info and rules
 - Implement onMeasure()?
 - Add "solved" detection
 - Add Copyright info to XML files
 - Create dynamic layout with menus / buttons
-- Replace MapDesigns with a saner construct (the current version _hurts_ to look at)
 - Move colors into resources
 - Name unnamed numeric constants
 - Implement state save / restore
@@ -15,10 +15,13 @@ TODO:
 - Add icon for every level design
 - Add UI functionality
 	- Add menu / buttons
-		- Level selection
+		- Level selection from a proper List view
 		- Enable/disable accelerometer ("Tilt sensor" or simply "Tilt")
-	- Add "high-scores" functionality (score = number of steps)
+	- Add "high-scores" functionality (score = number of steps? time? or 1/(time * steps)?)
 - Make the UI nicer
+	- Display level name
+	- Display remaining goals
+	- Display number of steps taken
 	- Replace filled circle with proper bitmap
 	- Replace walls with bitmaps
 	- Replace background with bitmaps

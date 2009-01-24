@@ -32,33 +32,33 @@
 package com.lecz.android.tiltmazes;
 
 public class Map {
-	private MapDesign mapDesign;
+	private MapDesign mDesign;
 
 	private int[][] mGoals;
 	private int mGoalCount;
 
 	public Map(MapDesign design) {
-		mapDesign = design;
+		mDesign = design;
 		init();
 	}
 	
 	public void init() {
-		if (mGoals == null) mGoals = new int[mapDesign.getSizeY()][mapDesign.getSizeX()];
+		if (mGoals == null) mGoals = new int[mDesign.getSizeY()][mDesign.getSizeX()];
 		
-		int[][] goals = mapDesign.getGoals();
-		for (int y = 0; y < mapDesign.getSizeY(); y++)
-			for (int x = 0; x < mapDesign.getSizeX(); x++)
+		int[][] goals = mDesign.getGoals();
+		for (int y = 0; y < mDesign.getSizeY(); y++)
+			for (int x = 0; x < mDesign.getSizeX(); x++)
 				mGoals[y][x] = goals[y][x];
 
-		mGoalCount = mapDesign.getGoalCount();
+		mGoalCount = mDesign.getGoalCount();
 	}
 	
 	public String getName() {
-		return mapDesign.getName();
+		return mDesign.getName();
 	}
 
 	public int getWalls(int x, int y) {
-		return mapDesign.getWalls(x, y);
+		return mDesign.getWalls(x, y);
 	}
 
 	public int getGoal(int x, int y) {
@@ -71,18 +71,18 @@ public class Map {
 	}
 
 	public int getSizeX() {
-		return mapDesign.getSizeY();
+		return mDesign.getSizeY();
 	}
 
 	public int getSizeY() {
-		return mapDesign.getSizeY();
+		return mDesign.getSizeY();
 	}
 	
 	public int getInitialPositionX() {
-		return mapDesign.getInitialPositionX();
+		return mDesign.getInitialPositionX();
 	}
 
 	public int getInitialPositionY() {
-		return mapDesign.getInitialPositionY();
+		return mDesign.getInitialPositionY();
 	}
 }

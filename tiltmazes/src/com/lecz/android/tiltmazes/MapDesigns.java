@@ -35,11 +35,234 @@
 
 package com.lecz.android.tiltmazes;
 
+import java.util.List;
+import java.util.LinkedList;
 import static com.lecz.android.tiltmazes.Wall.*;
 
 public final class MapDesigns {
 
-	public static final MapDesign MapM5C = new MapDesign(
+	public static final List<MapDesign> designList = new LinkedList<MapDesign>();
+	
+	static {
+		designList.add(new MapDesign(
+		    "S5A",
+		    5, 5,
+		    new int[][] {
+		            {LEFT|TOP, TOP|BOTTOM, TOP|RIGHT, TOP, TOP|RIGHT},
+		            {LEFT, 0, 0, 0, RIGHT|BOTTOM},
+		            {LEFT|RIGHT, 0, BOTTOM, 0, RIGHT},
+		            {LEFT, BOTTOM, 0, 0, RIGHT|BOTTOM},
+		            {LEFT|BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, RIGHT|BOTTOM}
+		    },
+		    new int[][] {
+		            {0, 0, 0, 0, 0},
+		            {0, 0, 0, 0, 0},
+		            {0, 0, 0, 0, 0},
+		            {0, 0, 0, 0, 0},
+		            {0, 0, 0, 0, 1}
+		    },
+		    0, 0
+		));
+
+		designList.add(new MapDesign(
+			"S6A",
+	        6, 6,
+	        new int[][] {
+	                {LEFT|TOP|RIGHT, TOP, TOP|BOTTOM, TOP, TOP|RIGHT, TOP|RIGHT},
+	                {LEFT, 0, 0, 0, BOTTOM, RIGHT},
+	                {LEFT|RIGHT, RIGHT, RIGHT|BOTTOM, BOTTOM, 0, RIGHT|BOTTOM},
+	                {LEFT|BOTTOM, 0, RIGHT, RIGHT, 0, RIGHT},
+	                {LEFT, 0, 0, 0, 0, RIGHT|BOTTOM},
+	                {LEFT|BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT, BOTTOM, BOTTOM, RIGHT|BOTTOM}
+	        },
+	        new int[][] {
+	                {0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 1, 0, 0},
+	                {0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0}
+	        },
+	        2, 2
+		));
+
+        designList.add(new MapDesign(
+	        "S6B",
+	        6, 6,
+	        new int[][] {
+	                {LEFT|TOP, TOP, TOP|RIGHT|BOTTOM, TOP, TOP, TOP|RIGHT|BOTTOM},
+	                {LEFT|BOTTOM, 0, BOTTOM, 0, 0, RIGHT},
+	                {LEFT, 0, 0, 0, RIGHT, RIGHT|BOTTOM},
+	                {LEFT, 0, RIGHT, BOTTOM, 0, RIGHT},
+	                {LEFT|RIGHT|BOTTOM, 0, 0, 0, 0, RIGHT},
+	                {LEFT|BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT, BOTTOM|RIGHT}
+	        },
+	        new int[][] {
+	                {0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 1},
+	                {0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0}
+	        },
+	        0, 3
+		));
+        
+        designList.add(new MapDesign(
+    		"S7A",
+            7, 7,
+            new int[][] {
+                    {LEFT|TOP, TOP, TOP, TOP|BOTTOM, TOP|RIGHT, TOP, TOP|RIGHT},
+                    {LEFT|BOTTOM, RIGHT, 0, 0, BOTTOM, 0, RIGHT|BOTTOM},
+                    {LEFT|BOTTOM, 0, RIGHT, 0, 0, 0, RIGHT},
+                    {LEFT, 0, 0, 0, RIGHT|BOTTOM, 0, RIGHT|BOTTOM},
+                    {LEFT, BOTTOM, RIGHT, 0, 0, 0, BOTTOM|RIGHT},
+                    {LEFT|BOTTOM, RIGHT, 0, 0, 0, BOTTOM, RIGHT},
+                    {LEFT|BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT}
+            },
+            new int[][] {
+                    {0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 1},
+                    {0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0}
+            },
+            0, 2
+        ));
+
+        designList.add(new MapDesign(
+    		"S7B",
+            7, 7,
+            new int[][] {
+                    {LEFT|TOP|RIGHT, TOP, TOP|BOTTOM, TOP|RIGHT, TOP, TOP, TOP|RIGHT|BOTTOM},
+                    {LEFT, 0, 0, 0, 0, 0, RIGHT},
+                    {LEFT, BOTTOM, RIGHT, 0, 0, RIGHT, RIGHT},
+                    {LEFT, 0, 0, RIGHT|BOTTOM, RIGHT, 0, RIGHT|BOTTOM},
+                    {LEFT|BOTTOM, 0, 0, 0, BOTTOM, 0,  RIGHT},
+                    {LEFT, RIGHT, RIGHT|BOTTOM, 0, 0, 0, RIGHT},
+                    {LEFT|BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT}
+            },
+            new int[][] {
+                    {0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 1, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0}
+            },
+            4, 1
+        ));
+      
+        designList.add(new MapDesign(
+	        "S7C",
+	        7, 7,
+	        new int[][] {
+	                {LEFT|TOP|RIGHT, TOP|BOTTOM, TOP|RIGHT, TOP, TOP, TOP|RIGHT, TOP|RIGHT},
+	                {LEFT|BOTTOM, 0, 0, 0, RIGHT|BOTTOM, 0, RIGHT},
+	                {LEFT, BOTTOM, 0, 0, 0, BOTTOM, RIGHT},
+	                {LEFT|BOTTOM, 0, RIGHT, RIGHT, 0, 0, RIGHT},
+	                {LEFT, RIGHT, BOTTOM, 0, 0, 0, BOTTOM|RIGHT},
+	                {LEFT, 0, 0, BOTTOM|RIGHT, BOTTOM, 0, RIGHT},
+	                {LEFT|BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT}
+	        },
+	        new int[][] {
+	                {0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 1}
+	        },
+	        0, 0
+        ));
+
+        designList.add(new MapDesign(
+	        "S8A",
+	        8, 8,
+	        new int[][] {
+	                {LEFT|TOP, TOP|RIGHT, TOP|BOTTOM, TOP, TOP, TOP|BOTTOM, TOP|RIGHT, TOP|RIGHT},
+	                {LEFT|BOTTOM, 0, 0, RIGHT|BOTTOM, 0, 0, 0, RIGHT|BOTTOM},
+	                {LEFT|BOTTOM, 0, 0, 0, RIGHT, RIGHT, BOTTOM, RIGHT},
+	                {LEFT, 0, RIGHT, 0, 0, 0, 0, RIGHT},
+	                {LEFT, BOTTOM, 0, 0, 0, 0, 0, LEFT|BOTTOM|RIGHT},
+	                {LEFT, 0, BOTTOM, 0, BOTTOM|RIGHT, 0, 0, RIGHT},
+	                {LEFT|RIGHT, 0, 0, 0, BOTTOM, 0, 0, BOTTOM|RIGHT},
+	                {LEFT|BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM|RIGHT}
+	        },
+	        new int[][] {
+	                {0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 1},
+	                {0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0}
+	        },
+	        0, 2
+        ));
+
+        designList.add(new MapDesign(
+	        "S9A",
+	        9, 9,
+	        new int[][] {
+	                {LEFT|TOP|BOTTOM, TOP, TOP|RIGHT, TOP, TOP, TOP|BOTTOM, TOP|RIGHT, TOP, TOP|RIGHT|BOTTOM},
+	                {LEFT, RIGHT|BOTTOM, 0, 0, BOTTOM, 0, 0, RIGHT, RIGHT},
+	                {LEFT, 0, 0, 0, 0, RIGHT, RIGHT, 0, RIGHT},
+	                {LEFT|BOTTOM, RIGHT, 0, BOTTOM, RIGHT, BOTTOM, 0, 0, RIGHT|BOTTOM},
+	                {LEFT, 0, 0, BOTTOM, 0, BOTTOM, RIGHT, 0, RIGHT},
+	                {LEFT, BOTTOM, 0, RIGHT, RIGHT, 0, BOTTOM, 0, BOTTOM|RIGHT},
+	                {LEFT|RIGHT, 0, BOTTOM, 0, BOTTOM, 0, 0, 0, RIGHT},
+	                {LEFT|BOTTOM, 0, 0, BOTTOM, RIGHT, 0, 0, BOTTOM, RIGHT},
+	                {LEFT|BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT}
+	        },
+	        new int[][] {
+	                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 1, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+	                {0, 0, 0, 0, 0, 0, 0, 0, 0}
+	        },
+	        5, 3
+        ));
+        
+    	designList.add(new MapDesign(
+            "S9B",
+            9, 9,
+            new int[][] {
+                    {LEFT|TOP|RIGHT, TOP, TOP|RIGHT, TOP|BOTTOM, TOP, TOP, TOP|RIGHT, TOP, TOP|RIGHT|BOTTOM},
+                    {LEFT, BOTTOM, 0, BOTTOM, BOTTOM, RIGHT, BOTTOM, 0, RIGHT},
+                    {LEFT|BOTTOM, RIGHT, 0, RIGHT, 0, 0, 0, RIGHT, RIGHT},
+                    {LEFT, 0, BOTTOM, 0, 0, BOTTOM|RIGHT, 0, BOTTOM, RIGHT},
+                    {LEFT|BOTTOM, 0, RIGHT, RIGHT, BOTTOM, 0, 0, 0, RIGHT},
+                    {LEFT, 0, 0, RIGHT, 0, BOTTOM, 0, RIGHT, BOTTOM|RIGHT},
+                    {LEFT|RIGHT, RIGHT, 0, BOTTOM, 0, 0, 0, 0, RIGHT},
+                    {LEFT, BOTTOM, 0, 0, RIGHT, 0, RIGHT, BOTTOM, RIGHT},
+                    {LEFT|BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT}
+            },
+            new int[][] {
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 1, 0}
+            },
+            1, 8
+    	));
+    	
+        designList.add(new MapDesign(
 			"M5C",
 			5, 5,
 			new int[][] {
@@ -57,9 +280,9 @@ public final class MapDesigns {
 					{1, 0, 0, 0, 1}
 			},
 			2, 2
-	);
-
-	public static final MapDesign MapM6B = new MapDesign(
+		));
+		
+		designList.add(new MapDesign(
 			"M6B",
 			6, 6,
 			new int[][] {
@@ -79,7 +302,8 @@ public final class MapDesigns {
 					{1, 0, 0, 1, 0, 0}
 			},
 			4, 1
-	);
+		));
+	}
 	
 	private MapDesigns() {
 	    throw new AssertionError();

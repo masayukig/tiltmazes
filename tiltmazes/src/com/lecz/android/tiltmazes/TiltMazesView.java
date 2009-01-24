@@ -55,61 +55,61 @@ import android.view.KeyEvent;
 
 
 public class TiltMazesView extends View {
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 
 	private Paint paint;
 
 	private SensorManager mSensorManager;
 	private Vibrator mVibrator;
 
-	private float accelThreshold = 2;
-	private float accelX = 0;
-	private float accelY = 0;
+	private static float ACCEL_THRESHOLD = 2;
+	private float mAccelX = 0;
+	private float mAccelY = 0;
 	@SuppressWarnings("unused")
-	private float accelZ = 0;
+	private float mAccelZ = 0;
 
-	private static float wallWidth = 5;
-	private float x_min;
-	private float y_min;
-	private float x_max;
-	private float y_max;
-	private float unit;
+	private static float WALL_WIDTH = 5;
+	private float mXMin;
+	private float mYMin;
+	private float mXMax;
+	private float mYMax;
+	private float mUnit;
 
-	private Timer timer;
-	private long t1 = 0;
-	private long t2 = 0;
-	private long dt = 0;
-	private int drawStep = 0;
-	private long[] drawTimeHistory;
-	private int drawTimeHistorySize = 20;
+	private Timer mTimer;
+	private long mT1 = 0;
+	private long mT2 = 0;
+	private int mDrawStep = 0;
+	private long[] mDrawTimeHistory;
+	private int mDrawTimeHistorySize = 20;
 
-	private GestureDetector gestureDetector;
-	private Handler handler;
+	private GestureDetector mGestureDetector;
+	private Handler mHandler;
 
-	private Map map;
-	private Ball ball;
+	private Map mMap;
+	private Ball mBall;
+	private int mCurrentMap = 0;
 
-	private Direction commandedRollDirection = Direction.NONE;
+	private Direction mCommandedRollDirection = Direction.NONE;
 
 	private final SensorListener mSensorAccelerometer = new SensorListener() {
 
 		public void onSensorChanged(int sensor, float[] values) {
-			accelX = values[0];
-			accelY = values[1];
-			accelZ = values[2];
+			mAccelX = values[0];
+			mAccelY = values[1];
+			mAccelZ = values[2];
 
-			commandedRollDirection = Direction.NONE;
-			if (Math.abs(accelX) > Math.abs(accelY)) {
-				if (accelX < -accelThreshold) commandedRollDirection = Direction.LEFT;
-				if (accelX >  accelThreshold) commandedRollDirection = Direction.RIGHT;
+			mCommandedRollDirection = Direction.NONE;
+			if (Math.abs(mAccelX) > Math.abs(mAccelY)) {
+				if (mAccelX < -ACCEL_THRESHOLD) mCommandedRollDirection = Direction.LEFT;
+				if (mAccelX >  ACCEL_THRESHOLD) mCommandedRollDirection = Direction.RIGHT;
 			}
 			else {
-				if (accelY < -accelThreshold) commandedRollDirection = Direction.DOWN;
-				if (accelY >  accelThreshold) commandedRollDirection = Direction.UP;
+				if (mAccelY < -ACCEL_THRESHOLD) mCommandedRollDirection = Direction.DOWN;
+				if (mAccelY >  ACCEL_THRESHOLD) mCommandedRollDirection = Direction.UP;
 			}
 
-			if (commandedRollDirection != Direction.NONE && ! ball.isRolling()) {
-				ball.roll(commandedRollDirection);
+			if (mCommandedRollDirection != Direction.NONE && ! mBall.isRolling()) {
+				mBall.roll(mCommandedRollDirection);
 			}
 		}
 
@@ -138,24 +138,24 @@ public class TiltMazesView extends View {
 		// Calculate geometry
 		int w = getWidth();
 		int h = getHeight();
-		x_min = wallWidth / 2;
-		y_min = wallWidth / 2;
-		x_max = Math.min(w, h) - wallWidth / 2;
-		y_max = x_max;
+		mXMin = WALL_WIDTH / 2;
+		mYMin = WALL_WIDTH / 2;
+		mXMax = Math.min(w, h) - WALL_WIDTH / 2;
+		mYMax = mXMax;
 
-		map = new Map(MapDesigns.MapM6B);
+		mMap = new Map(MapDesigns.designList.get(mCurrentMap));
 		
 		// Create ball
-		ball = new Ball(this, map,
-				map.getInitialPositionX(),
-				map.getInitialPositionY());
+		mBall = new Ball(this, mMap,
+				mMap.getInitialPositionX(),
+				mMap.getInitialPositionY());
 
 		// Stats
-		drawTimeHistory = new long[drawTimeHistorySize];
-		t1 = SystemClock.elapsedRealtime();
+		mDrawTimeHistory = new long[mDrawTimeHistorySize];
+		mT1 = SystemClock.elapsedRealtime();
 
 		// Create gesture detector to detect flings
-		gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+		mGestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
 			@Override
 			public boolean onDown(MotionEvent e) {
 				return true;
@@ -165,47 +165,73 @@ public class TiltMazesView extends View {
 			public boolean onFling(MotionEvent e1, MotionEvent e2,
 					float velocityX, float velocityY) {
 				// Roll the ball in the direction of the fling				
-				commandedRollDirection = Direction.NONE;
+				mCommandedRollDirection = Direction.NONE;
 				
 				if (Math.abs(velocityX) > Math.abs(velocityY)) {
-					if (velocityX < 0)	commandedRollDirection = Direction.LEFT;
-					else				commandedRollDirection = Direction.RIGHT;
+					if (velocityX < 0)	mCommandedRollDirection = Direction.LEFT;
+					else				mCommandedRollDirection = Direction.RIGHT;
 				}
 				else {
-					if (velocityY < 0)	commandedRollDirection = Direction.UP;
-					else 				commandedRollDirection = Direction.DOWN;
+					if (velocityY < 0)	mCommandedRollDirection = Direction.UP;
+					else 				mCommandedRollDirection = Direction.DOWN;
 				}
 
-				if (commandedRollDirection != Direction.NONE && ! ball.isRolling()) {
-					ball.roll(commandedRollDirection);
+				if (mCommandedRollDirection != Direction.NONE && ! mBall.isRolling()) {
+					mBall.roll(mCommandedRollDirection);
 				}
 				
 				return true;
 			}
 		});
-		gestureDetector.setIsLongpressEnabled(false);
+		mGestureDetector.setIsLongpressEnabled(false);
 		
 		// Create message handler
-		handler = new Handler() {
+		mHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
 				case Messages.MSG_INVALIDATE:
 					invalidate();
 					return;
+				
 				case Messages.MSG_REACHED_GOAL:
 					vibrate(100);
 					return;
+				
 				case Messages.MSG_REACHED_WALL:
 					vibrate(12);
 					return;
+				
 				case Messages.MSG_RESTART:
-					ball.setX(map.getInitialPositionX());
-					ball.setY(map.getInitialPositionY());
-					map.init();
+					mBall.setX(mMap.getInitialPositionX());
+					mBall.setY(mMap.getInitialPositionY());
+					mMap.init();
+					invalidate();
+					return;
+				
+				case Messages.MSG_MAP_PREVIOUS:
+				case Messages.MSG_MAP_NEXT:
+					if (msg.what == Messages.MSG_MAP_PREVIOUS) {
+						if (mCurrentMap == 0) {
+							// Wrap around
+							mCurrentMap = MapDesigns.designList.size() - 1;
+						}
+						else {
+							mCurrentMap = (mCurrentMap - 1) % MapDesigns.designList.size();
+						}
+					}
+					else {
+						mCurrentMap = (mCurrentMap + 1) % MapDesigns.designList.size();
+					}
+					mMap = new Map(MapDesigns.designList.get(mCurrentMap));
+					mBall.setMap(mMap);
+					mBall.setX(mMap.getInitialPositionX());
+					mBall.setY(mMap.getInitialPositionY());
+					mMap.init();
 					invalidate();
 					return;
 				}
+					
 				super.handleMessage(msg);
 			}
 		};
@@ -217,8 +243,8 @@ public class TiltMazesView extends View {
 					postInvalidate();
 				}
 			};
-			timer = new Timer(true);
-			timer.schedule(redrawTask, 0, 1000/*ms*/ / 20);
+			mTimer = new Timer(true);
+			mTimer.schedule(redrawTask, 0, 1000/*ms*/ / 20);
 		}	
 	}
 
@@ -226,24 +252,24 @@ public class TiltMazesView extends View {
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		x_max = Math.min(w, h) - wallWidth / 2;
-		y_max = x_max;
+		mXMax = Math.min(w, h) - WALL_WIDTH / 2;
+		mYMax = mXMax;
 	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_DPAD_LEFT:
-			ball.roll(Direction.LEFT);
+			mBall.roll(Direction.LEFT);
 			return true;
 		case KeyEvent.KEYCODE_DPAD_RIGHT:
-			ball.roll(Direction.RIGHT);
+			mBall.roll(Direction.RIGHT);
 			return true;
 		case KeyEvent.KEYCODE_DPAD_UP:
-			ball.roll(Direction.UP);
+			mBall.roll(Direction.UP);
 			return true;
 		case KeyEvent.KEYCODE_DPAD_DOWN:
-			ball.roll(Direction.DOWN);
+			mBall.roll(Direction.DOWN);
 			return true;
 
 		default:
@@ -253,27 +279,31 @@ public class TiltMazesView extends View {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		return gestureDetector.onTouchEvent(event);
+		return mGestureDetector.onTouchEvent(event);
 	}
 
 	@Override
 	public void onDraw(Canvas canvas) {
 		// FPS stats
-		t2 = SystemClock.elapsedRealtime();
-		dt = (t2 - t1);
-		t1 = t2;
-		drawTimeHistory[drawStep % drawTimeHistorySize] = dt;
-		drawStep = drawStep + 1;
+		mT2 = SystemClock.elapsedRealtime();
+		long dt = (mT2 - mT1);
+		mT1 = mT2;
+		mDrawTimeHistory[mDrawStep % mDrawTimeHistorySize] = dt;
+		mDrawStep = mDrawStep + 1;
 
 		// Set up geometry
-		float x_unit = ((x_max - x_min) / map.getSizeX());
-		float y_unit = ((y_max - y_min) / map.getSizeY());
-		unit = Math.min(x_unit, y_unit);
+		float xUnit = ((mXMax - mXMin) / mMap.getSizeX());
+		float yUnit = ((mYMax - mYMin) / mMap.getSizeY());
+		mUnit = Math.min(xUnit, yUnit);
 
 		drawWalls(canvas);
 		drawGoals(canvas);
 		drawBall(canvas);
 
+		// TODO(leczbalazs): put this into a proper layout 
+		paint.setColor(Color.WHITE);
+		canvas.drawText(mMap.getName(), 20, 30, paint);
+		
 		if (DEBUG) {
 			drawDirection(canvas);
 			// Print FPS
@@ -285,11 +315,11 @@ public class TiltMazesView extends View {
 	}
 
 	public void sendEmptyMessage(int msg) {
-		handler.sendEmptyMessage(msg);
+		mHandler.sendEmptyMessage(msg);
 	}
 
 	public void sendMessage(Message msg) {
-		handler.sendMessage(msg);
+		mHandler.sendMessage(msg);
 	}
 
 	public void registerListener() {
@@ -304,7 +334,7 @@ public class TiltMazesView extends View {
 	public double getFPS() {
 		double avg = 0;
 		int n = 0;
-		for (long t : drawTimeHistory) {
+		for (long t : mDrawTimeHistory) {
 			if (t > 0) {
 				avg = avg + t;
 				n = n + 1;
@@ -322,44 +352,44 @@ public class TiltMazesView extends View {
 		int walls;
 
 		paint.setColor(Color.RED);
-		paint.setStrokeWidth(wallWidth);
+		paint.setStrokeWidth(WALL_WIDTH);
 		paint.setStrokeCap(Cap.ROUND);
 
-		for (int y = 0; y < map.getSizeY(); y++) {
-			for (int x = 0; x < map.getSizeX(); x++) {
+		for (int y = 0; y < mMap.getSizeY(); y++) {
+			for (int x = 0; x < mMap.getSizeX(); x++) {
 
-				walls = map.getWalls(x, y);
+				walls = mMap.getWalls(x, y);
 
 				if ((walls & Wall.TOP) > 0) {
 					canvas.drawLine(
-							x_min + x * unit,
-							y_min + y * unit,
-							x_min + (x + 1) * unit,
-							y_min + y * unit,
+							mXMin + x * mUnit,
+							mYMin + y * mUnit,
+							mXMin + (x + 1) * mUnit,
+							mYMin + y * mUnit,
 							paint);
 				}
 				if ((walls & Wall.RIGHT) > 0) {
 					canvas.drawLine(
-							x_min + (x + 1) * unit,
-							y_min + y * unit,
-							x_min + (x + 1) * unit,
-							y_min + (y + 1) * unit,
+							mXMin + (x + 1) * mUnit,
+							mYMin + y * mUnit,
+							mXMin + (x + 1) * mUnit,
+							mYMin + (y + 1) * mUnit,
 							paint);
 				}
 				if ((walls & Wall.BOTTOM) > 0) {
 					canvas.drawLine(
-							x_min + x * unit,
-							y_min + (y + 1) * unit,
-							x_min + (x + 1) * unit,
-							y_min + (y + 1) * unit,
+							mXMin + x * mUnit,
+							mYMin + (y + 1) * mUnit,
+							mXMin + (x + 1) * mUnit,
+							mYMin + (y + 1) * mUnit,
 							paint);
 				}
 				if ((walls & Wall.LEFT) > 0) {
 					canvas.drawLine(
-							x_min + x * unit,
-							y_min + y * unit,
-							x_min + x * unit,
-							y_min + (y + 1) * unit,
+							mXMin + x * mUnit,
+							mYMin + y * mUnit,
+							mXMin + x * mUnit,
+							mYMin + (y + 1) * mUnit,
 							paint);
 				}
 			}		
@@ -367,20 +397,20 @@ public class TiltMazesView extends View {
 	}
 
 	private void drawGoals(Canvas canvas) {
-		int sizeX = map.getSizeX();
-		int sizeY = map.getSizeY();
+		int sizeX = mMap.getSizeX();
+		int sizeY = mMap.getSizeY();
 
 		paint.setColor(Color.BLUE);
 		paint.setStyle(Style.FILL);
 
 		for (int y = 0; y < sizeY; y++) {
 			for (int x = 0; x < sizeX; x++) {
-				if (map.getGoal(x, y) > 0) {
+				if (mMap.getGoal(x, y) > 0) {
 					canvas.drawRect(
-							x_min + x * unit + unit / 4,
-							y_min + y * unit + unit / 4,
-							x_min + (x + 1) * unit - unit / 4,
-							y_min + (y + 1) * unit - unit / 4,
+							mXMin + x * mUnit + mUnit / 4,
+							mYMin + y * mUnit + mUnit / 4,
+							mXMin + (x + 1) * mUnit - mUnit / 4,
+							mYMin + (y + 1) * mUnit - mUnit / 4,
 							paint);
 				}
 			}		
@@ -391,9 +421,9 @@ public class TiltMazesView extends View {
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Style.FILL);
 		canvas.drawCircle(
-				x_min + (ball.getX() + 0.5f) * unit,
-				y_min + (ball.getY() + 0.5f) * unit,
-				unit * 0.4f,
+				mXMin + (mBall.getX() + 0.5f) * mUnit,
+				mYMin + (mBall.getY() + 0.5f) * mUnit,
+				mUnit * 0.4f,
 				paint
 		);
 
@@ -403,9 +433,9 @@ public class TiltMazesView extends View {
 			paint.setColor(Color.MAGENTA);
 			paint.setStyle(Style.STROKE);
 			canvas.drawCircle(
-					x_min + (ball.getXTarget() + 0.5f) * unit,
-					y_min + (ball.getYTarget() + 0.5f) * unit,
-					unit * 0.4f,
+					mXMin + (mBall.getXTarget() + 0.5f) * mUnit,
+					mYMin + (mBall.getYTarget() + 0.5f) * mUnit,
+					mUnit * 0.4f,
 					paint
 			);
 		}
@@ -414,22 +444,22 @@ public class TiltMazesView extends View {
 	private void drawDirection(Canvas canvas) {
 		paint.setColor(Color.GREEN);
 		paint.setStrokeWidth(5);
-		canvas.drawLine(x_max / 2, y_max / 2, x_max / 2 + accelX * 10, y_max / 2 - accelY * 10, paint);
+		canvas.drawLine(mXMax / 2, mYMax / 2, mXMax / 2 + mAccelX * 10, mYMax / 2 - mAccelY * 10, paint);
 
 		paint.setColor(Color.RED);
-		if (commandedRollDirection == Direction.NONE) {
-			canvas.drawCircle(x_max / 2, y_max / 2, 5, paint);
+		if (mCommandedRollDirection == Direction.NONE) {
+			canvas.drawCircle(mXMax / 2, mYMax / 2, 5, paint);
 		}
 		else {
 			int x = 0;
 			int y = 0;
-			switch (commandedRollDirection) {
-			case LEFT: { x = -1; break;}
-			case RIGHT:{ x =  1; break;}
-			case UP:   { y = -1; break;}
-			case DOWN: { y =  1; break;}
+			switch (mCommandedRollDirection) {
+			case LEFT: { x = -1; y =  0; break;}
+			case RIGHT:{ x =  1; y =  0; break;}
+			case UP:   { x =  0; y = -1; break;}
+			case DOWN: { x =  0; y =  1; break;}
 			}
-			canvas.drawLine(x_max / 2, y_max / 2, x_max / 2 + x * 20, y_max / 2 + y * 20, paint);
+			canvas.drawLine(mXMax / 2, mYMax / 2, mXMax / 2 + x * 20, mYMax / 2 + y * 20, paint);
 		}
 	}
 }
