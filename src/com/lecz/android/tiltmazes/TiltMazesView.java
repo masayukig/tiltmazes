@@ -301,7 +301,7 @@ public class TiltMazesView extends View {
 		drawBall(canvas);
 
 		// TODO(leczbalazs): put this into a proper layout 
-		paint.setColor(Color.WHITE);
+		paint.setColor(Color.RED);
 		canvas.drawText(mMap.getName(), 20, 30, paint);
 		
 		if (DEBUG) {
