@@ -38,9 +38,12 @@ import android.view.View;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Style;
+import android.graphics.Shader.TileMode;
+import android.graphics.RadialGradient;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.os.Handler;
@@ -59,6 +62,7 @@ public class TiltMazesView extends View {
 	private boolean DEBUG = false;
 
 	private Paint paint;
+	private Matrix matrix = new Matrix();
 
 	private SensorManager mSensorManager;
 	private Vibrator mVibrator;
@@ -150,6 +154,7 @@ public class TiltMazesView extends View {
 		mYMax = mXMax;
 
 		mMap = new Map(MapDesigns.designList.get(mCurrentMap));
+		calculateUnit();
 		
 		// Create ball
 		mBall = new Ball(this, mMap,
@@ -236,6 +241,7 @@ public class TiltMazesView extends View {
 					mMap.init();
 					mMazeNameLabel.setText(getResources().getText(R.string.maze_label) + " " + mMap.getName());
 					mMazeNameLabel.invalidate();
+					calculateUnit();
 					invalidate();
 					return;
 				}
@@ -244,7 +250,7 @@ public class TiltMazesView extends View {
 			}
 		};
 		
-		// Schedule a redraw at 20Hz
+		// Schedule a redraw at 25Hz
 		if (DEBUG) {
 			TimerTask redrawTask = new TimerTask() {
 				public void run() {
@@ -252,7 +258,7 @@ public class TiltMazesView extends View {
 				}
 			};
 			mTimer = new Timer(true);
-			mTimer.schedule(redrawTask, 0, 1000/*ms*/ / 20);
+			mTimer.schedule(redrawTask, 0, 1000/*ms*/ / 25);
 		}	
 	}
 	
@@ -267,6 +273,8 @@ public class TiltMazesView extends View {
 		mWidth = Math.min(w, h);
 		mXMax = Math.min(w, h) - WALL_WIDTH / 2;
 		mYMax = mXMax;
+		
+		calculateUnit();
 	}
 	
 	@Override
@@ -302,6 +310,13 @@ public class TiltMazesView extends View {
 		return mGestureDetector.onTouchEvent(event);
 	}
 
+	private void calculateUnit() {
+		// Set up geometry
+		float xUnit = ((mXMax - mXMin) / mMap.getSizeX());
+		float yUnit = ((mYMax - mYMin) / mMap.getSizeY());
+		mUnit = Math.min(xUnit, yUnit);
+	}
+	
 	@Override
 	public void onDraw(Canvas canvas) {
 		// FPS stats
@@ -310,11 +325,6 @@ public class TiltMazesView extends View {
 		mT1 = mT2;
 		mDrawTimeHistory[mDrawStep % mDrawTimeHistorySize] = dt;
 		mDrawStep = mDrawStep + 1;
-
-		// Set up geometry
-		float xUnit = ((mXMax - mXMin) / mMap.getSizeX());
-		float yUnit = ((mYMax - mYMin) / mMap.getSizeY());
-		mUnit = Math.min(xUnit, yUnit);
 
 		drawWalls(canvas);
 		drawGoals(canvas);
@@ -371,7 +381,7 @@ public class TiltMazesView extends View {
 	private void drawWalls(Canvas canvas) {
 		int walls;
 
-		paint.setColor(Color.RED);
+		paint.setColor(getResources().getColor(R.color.wall));
 		paint.setStrokeWidth(WALL_WIDTH);
 		paint.setStrokeCap(Cap.ROUND);
 
@@ -414,18 +424,31 @@ public class TiltMazesView extends View {
 				}
 			}		
 		}
+		
+		paint.setShader(null);
 	}
 
 	private void drawGoals(Canvas canvas) {
 		int sizeX = mMap.getSizeX();
 		int sizeY = mMap.getSizeY();
-
-		paint.setColor(Color.BLUE);
+        
+		RadialGradient goalGrad = new RadialGradient(
+				0,
+				0,
+				mUnit,
+				getResources().getColor(R.color.goal_highlight),
+				getResources().getColor(R.color.goal_shadow),
+				TileMode.MIRROR);
+		paint.setShader(goalGrad);
 		paint.setStyle(Style.FILL);
 
 		for (int y = 0; y < sizeY; y++) {
 			for (int x = 0; x < sizeX; x++) {
 				if (mMap.getGoal(x, y) > 0) {
+			        matrix.setTranslate(
+			        		mXMin + x * mUnit,
+			        		mYMin + y * mUnit);
+			        goalGrad.setLocalMatrix(matrix);
 					canvas.drawRect(
 							mXMin + x * mUnit + mUnit / 4,
 							mYMin + y * mUnit + mUnit / 4,
@@ -435,10 +458,20 @@ public class TiltMazesView extends View {
 				}
 			}		
 		}
+		
+		paint.setShader(null);
 	}
 
 	private void drawBall(Canvas canvas) {
-		paint.setColor(Color.WHITE);
+		paint.setShader(new RadialGradient(
+				mXMin + (mBall.getX() + 0.55f) * mUnit,
+				mYMin + (mBall.getY() + 0.55f) * mUnit,
+				mUnit * 0.35f,
+				getResources().getColor(R.color.ball_highlight),
+				getResources().getColor(R.color.ball_shadow),
+				TileMode.MIRROR
+		));
+
 		paint.setStyle(Style.FILL);
 		canvas.drawCircle(
 				mXMin + (mBall.getX() + 0.5f) * mUnit,
@@ -446,6 +479,7 @@ public class TiltMazesView extends View {
 				mUnit * 0.4f,
 				paint
 		);
+		paint.setShader(null);
 
 		// Draw target position
 		if (DEBUG) {
@@ -482,4 +516,5 @@ public class TiltMazesView extends View {
 			canvas.drawLine(mXMax / 2, mYMax / 2, mXMax / 2 + x * 20, mYMax / 2 + y * 20, paint);
 		}
 	}
+	
 }

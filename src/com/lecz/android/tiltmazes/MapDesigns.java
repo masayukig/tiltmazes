@@ -413,6 +413,46 @@ public final class MapDesigns {
         ));
     	
         designList.add(new MapDesign(
+    			"M5A",
+    			5, 5,
+    			new int[][] {
+    					{LEFT|TOP|BOTTOM, TOP|RIGHT, TOP, TOP|BOTTOM, TOP|RIGHT},
+    					{LEFT, 0, 0, RIGHT, RIGHT},
+    					{LEFT|RIGHT, RIGHT, BOTTOM, 0, RIGHT},
+    					{LEFT, 0, 0, 0, RIGHT|BOTTOM},
+    					{LEFT|BOTTOM|RIGHT, BOTTOM, RIGHT|BOTTOM, BOTTOM, RIGHT|BOTTOM}
+    			},
+    			new int[][] {
+    					{1, 0, 0, 0, 1},
+    					{0, 0, 0, 0, 0},
+    					{0, 0, 1, 0, 0},
+    					{0, 0, 0, 0, 0},
+    					{1, 0, 0, 0, 1}
+    			},
+    			2, 3
+    	));	
+    	
+        designList.add(new MapDesign(
+    			"M5B",
+    			5, 5,
+    			new int[][] {
+    					{LEFT|TOP|BOTTOM, TOP, TOP|BOTTOM, TOP|RIGHT, TOP|RIGHT},
+    					{LEFT, 0, TOP|RIGHT, 0, RIGHT},
+    					{LEFT|RIGHT, 0, BOTTOM, 0, BOTTOM|RIGHT},
+    					{LEFT|BOTTOM, RIGHT, 0, BOTTOM, RIGHT|BOTTOM},
+    					{LEFT|BOTTOM, BOTTOM, BOTTOM, BOTTOM, RIGHT|BOTTOM}
+    			},
+    			new int[][] {
+    					{0, 1, 0, 1, 0},
+    					{1, 0, 0, 0, 1},
+    					{0, 0, 0, 0, 0},
+    					{1, 0, 0, 0, 1},
+    					{0, 1, 0, 1, 0}
+    			},
+    			2, 2
+    	));	
+
+        designList.add(new MapDesign(
 			"M5C",
 			5, 5,
 			new int[][] {
@@ -433,25 +473,69 @@ public final class MapDesigns {
 		));
 		
 		designList.add(new MapDesign(
-			"M6B",
+				"M6A",
+				6, 6,
+				new int[][] {
+						{LEFT|TOP|RIGHT, TOP, TOP|RIGHT, TOP, TOP, TOP|RIGHT},
+						{LEFT|BOTTOM, 0, BOTTOM, RIGHT, 0, BOTTOM|RIGHT},
+						{LEFT|RIGHT, 0, 0, 0, 0, RIGHT},
+						{LEFT|BOTTOM, 0, RIGHT, BOTTOM, RIGHT, BOTTOM|RIGHT},
+						{LEFT, 0, BOTTOM, 0, 0, RIGHT},
+						{LEFT|BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT}
+				},
+				new int[][] {
+						{0, 0, 0, 1, 0, 0},
+						{1, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 1},
+						{1, 0, 0, 0, 0, 1},
+						{0, 0, 0, 1, 0, 0}
+				},
+				0, 2
+		));
+		
+		designList.add(new MapDesign(
+				"M6B",
+				6, 6,
+				new int[][] {
+						{LEFT|TOP|BOTTOM, TOP|RIGHT, TOP, TOP, TOP|BOTTOM, TOP|RIGHT},
+						{LEFT, 0, BOTTOM|RIGHT, 0, RIGHT, RIGHT},
+						{LEFT|BOTTOM|RIGHT, RIGHT, 0, 0, 0, BOTTOM|RIGHT},
+						{LEFT, 0, 0, BOTTOM, BOTTOM, RIGHT},
+						{LEFT|RIGHT, BOTTOM, 0, 0, BOTTOM, RIGHT},
+						{LEFT|BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT}
+				},
+				new int[][] {
+						{1, 0, 0, 0, 0, 1},
+						{0, 0, 0, 0, 0, 0},
+						{1, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0},
+						{0, 1, 0, 0, 0, 1},
+						{1, 0, 0, 1, 0, 0}
+				},
+				4, 1
+		));
+		
+		designList.add(new MapDesign(
+			"M6C",
 			6, 6,
 			new int[][] {
-					{LEFT|TOP|BOTTOM, TOP|RIGHT, TOP, TOP, TOP|BOTTOM, TOP|RIGHT},
-					{LEFT, 0, BOTTOM|RIGHT, 0, RIGHT, RIGHT},
-					{LEFT|BOTTOM|RIGHT, RIGHT, 0, 0, 0, BOTTOM|RIGHT},
-					{LEFT, 0, 0, BOTTOM, BOTTOM, RIGHT},
-					{LEFT|RIGHT, BOTTOM, 0, 0, BOTTOM, RIGHT},
-					{LEFT|BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT}
+					{LEFT|TOP|RIGHT, TOP, TOP|RIGHT, TOP, TOP, TOP|RIGHT|BOTTOM},
+					{LEFT, BOTTOM, 0, BOTTOM|RIGHT, RIGHT, RIGHT},
+					{LEFT|BOTTOM, RIGHT, 0, 0, 0, BOTTOM|RIGHT},
+					{LEFT, 0, BOTTOM, RIGHT, 0, RIGHT},
+					{LEFT|BOTTOM|RIGHT, RIGHT, BOTTOM, 0, BOTTOM|RIGHT, RIGHT},
+					{LEFT|BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM|RIGHT}
 			},
 			new int[][] {
-					{1, 0, 0, 0, 0, 1},
-					{0, 0, 0, 0, 0, 0},
-					{1, 0, 0, 0, 0, 0},
-					{0, 0, 0, 0, 0, 0},
-					{0, 1, 0, 0, 0, 1},
-					{1, 0, 0, 1, 0, 0}
+					{1, 0, 1, 0, 0, 1},
+					{0, 0, 0, 0, 0, 1},
+					{0, 1, 0, 0, 0, 0},
+					{0, 0, 0, 1, 0, 0},
+					{1, 0, 1, 0, 0, 0},
+					{1, 0, 0, 0, 0, 1}
 			},
-			4, 1
+			1, 1
 		));
 	}
 	
