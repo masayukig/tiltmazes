@@ -3,31 +3,32 @@ V0.1 - Developer-forum release
 V1.0 - First Android Market release
 
 TODO:
-- Add "About" menu item with copyright info and rules
-- Implement onMeasure()?
-- Add "solved" detection
-- Add Copyright info to XML files
-- Create dynamic layout with menus / buttons
-- Move colors into resources
-- Name unnamed numeric constants
-- Implement state save / restore
-- Add all level designs from http://clickmazes.com/newtilt/ixtilt2d.htm
-- Add icon for every level design
-- Add UI functionality
-	- Add menu / buttons
-		- Level selection from a proper List view
-		- Enable/disable accelerometer ("Tilt sensor" or simply "Tilt")
-	- Add "high-scores" functionality (score = number of steps? time? or 1/(time * steps)?)
-- Make the UI nicer
-	- Display level name
-	- Display remaining goals
-	- Display number of steps taken
-	- Replace filled circle with proper bitmap
-	- Replace walls with bitmaps
-	- Replace background with bitmaps
-- Add proper logging
-- Refactor: move game logic out of TiltMazesMainView into a separate class
-- Maybe we could do away with only BOTTOM and RIGHT walls (if boundaries are already handled as walls), but it's not that important
+P1 - Refactor: move game logic out of TiltMazesMainView into a separate class
+P1 - Add "About" menu item with copyright info and rules
+P1 - Add "solved" detection
+P1 - Implement state save / restore
+P1 - Add all level designs from http://clickmazes.com/newtilt/ixtilt2d.htm
+P1	- Display level name
+P1	- Display remaining goals
+P1	- Display number of steps taken
+
+P2 - Enable/disable accelerometer ("Tilt sensor" or simply "Tilt")
+P2 - Add "high-scores" functionality (score = number of steps? time? or 1/(time * steps)?)
+
+P3 - Add maze selection from a proper List view
+P3 - Replace filled circle with proper bitmap
+P3 - Replace walls with bitmaps
+P3 - Replace background with bitmaps
+P3 - Add proper logging
+P3 - Implement onMeasure()?
+P3 - Add Copyright info to XML files
+P3 - Create dynamic layout with menus / buttons
+P3 - Move colors into resources
+P3 - Name unnamed numeric constants
+
+P4 - Add icon for every level design
+
+Q: Maybe we could do away with only BOTTOM and RIGHT walls (if boundaries are already handled as walls), but it's not that important
 
 Bugs:
 - If started in landscape mode, the acceleration vector is not (always) corrected for rotation
