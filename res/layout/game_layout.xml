@@ -37,7 +37,7 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" android:background="@color/background">
 
     <!-- Main image -->
     <com.lecz.android.tiltmazes.TiltMazesView android:id="@+id/maze_view"

@@ -44,6 +44,24 @@ public final class MapDesigns {
 	public static final List<MapDesign> designList = new LinkedList<MapDesign>();
 	
 	static {
+		/*
+		designList.add(new MapDesign(
+			    "Icon",
+			    3, 3,
+			    new int[][] {
+			            {LEFT|TOP|RIGHT, TOP, TOP|RIGHT},
+			            {LEFT|BOTTOM, 0, RIGHT|BOTTOM},
+			            {LEFT|BOTTOM, BOTTOM, RIGHT|BOTTOM}
+			    },
+			    new int[][] {
+			            {0, 0, 0},
+			            {0, 0, 0},
+			            {0, 0, 1}
+			    },
+			    0, 0
+		));
+		*/
+		
 		designList.add(new MapDesign(
 		    "S5A",
 		    5, 5,
