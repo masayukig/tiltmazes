@@ -8,7 +8,6 @@ P1 - Add "About" menu item with copyright info and rules
 P1 - Add "solved" detection
 P1 - Implement lifecycle management properly (start, stop, pause, resume, save, restore, destroy)
 P1 - Add all level designs from http://clickmazes.com/newtilt/ixtilt2d.htm
-P1	- Display level name
 P1	- Display remaining goals
 P1	- Display number of steps taken
 

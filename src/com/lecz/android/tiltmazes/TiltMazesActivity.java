@@ -77,6 +77,10 @@ public class TiltMazesActivity extends Activity {
         menu.add(0, MENU_RESTART, 0, R.string.menu_restart);
         menu.add(0, MENU_MAP_NEXT, 0, R.string.menu_map_next);
         
+        menu.findItem(MENU_MAP_PREV).setIcon(getResources().getDrawable(android.R.drawable.ic_media_previous));
+        menu.findItem(MENU_RESTART).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_rotate));
+        menu.findItem(MENU_MAP_NEXT).setIcon(getResources().getDrawable(android.R.drawable.ic_media_next));
+        
         return true;
     }
 
