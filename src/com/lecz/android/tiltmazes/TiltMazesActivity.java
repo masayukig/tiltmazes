@@ -33,6 +33,7 @@ package com.lecz.android.tiltmazes;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -87,21 +88,59 @@ public class TiltMazesActivity extends Activity {
         return false;
     }
     
-	@Override
-	protected void onResume() {
-		super.onResume();
-		mView.registerListener();
-	}
+    @Override
+    protected void onStart() {
+		Log.d(this.toString(), "onStart() called");
 
-	@Override
+    	// TODO Auto-generated method stub
+    	super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+		Log.d(this.toString(), "onStop() called");
+
+    	// TODO Auto-generated method stub
+    	super.onStop();
+    }
+    
+    @Override
 	protected void onPause() {
+		Log.d(this.toString(), "onPause() called");
+
 		super.onPause();
 		mView.unregisterListener();
 	}
 
 	@Override
+	protected void onResume() {
+		Log.d(this.toString(), "onResume() called");
+
+		super.onResume();
+		mView.registerListener();
+	}
+
+	@Override
 	public void onSaveInstanceState(Bundle icicle) {
+		Log.d(this.toString(), "onSaveInstanceState() called");
+
 		super.onSaveInstanceState(icicle);
 		mView.unregisterListener();
 	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		Log.d(this.toString(), "onRestoreInstanceState() called");
+
+		// TODO Auto-generated method stub
+		super.onRestoreInstanceState(savedInstanceState);
+	}
+
+	@Override
+    protected void onDestroy() {
+		Log.d(this.toString(), "onDestroy() called");
+
+    	// TODO Auto-generated method stub
+    	super.onDestroy();
+    }
 }

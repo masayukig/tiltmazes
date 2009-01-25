@@ -6,7 +6,7 @@ TODO:
 P1 - Refactor: move game logic out of TiltMazesMainView into a separate class
 P1 - Add "About" menu item with copyright info and rules
 P1 - Add "solved" detection
-P1 - Implement state save / restore
+P1 - Implement lifecycle management properly (start, stop, pause, resume, save, restore, destroy)
 P1 - Add all level designs from http://clickmazes.com/newtilt/ixtilt2d.htm
 P1	- Display level name
 P1	- Display remaining goals
@@ -33,6 +33,7 @@ Q: Maybe we could do away with only BOTTOM and RIGHT walls (if boundaries are al
 Bugs:
 - If started in landscape mode, the acceleration vector is not (always) corrected for rotation
 - Ball isRolling and target coordinates are not reset when changing levels -> can be fatal
+
 
 V1.1 - Bugfix release
 

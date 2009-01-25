@@ -262,6 +262,156 @@ public final class MapDesigns {
             1, 8
     	));
     	
+    	designList.add(new MapDesign(
+                "S10A",
+                10, 10,
+                new int[][] {
+                        {LEFT|TOP|RIGHT, TOP, TOP, TOP, TOP, TOP|BOTTOM, TOP|RIGHT, TOP, TOP|RIGHT, TOP|RIGHT},
+                        {LEFT, RIGHT, 0, 0, 0, 0, 0, 0, 0, BOTTOM|RIGHT},
+                        {LEFT|BOTTOM, 0, 0, BOTTOM|RIGHT, 0, 0, BOTTOM|RIGHT, BOTTOM, 0, RIGHT},
+                        {LEFT, 0, BOTTOM|RIGHT, 0, 0, 0, RIGHT, 0, 0, RIGHT},
+                        {LEFT|BOTTOM, 0, BOTTOM, RIGHT, 0, 0, BOTTOM, 0, BOTTOM|RIGHT, RIGHT},
+                        {LEFT, BOTTOM, 0, 0, RIGHT, 0, 0, BOTTOM, RIGHT, RIGHT},
+                        {LEFT, 0, BOTTOM|RIGHT, BOTTOM, 0, 0, BOTTOM|RIGHT, 0, 0, BOTTOM|RIGHT},
+                        {LEFT|BOTTOM, 0, RIGHT, 0, 0, BOTTOM|RIGHT, 0, 0, 0, BOTTOM|RIGHT},
+                        {LEFT, 0, BOTTOM, 0, 0, 0, RIGHT, BOTTOM, 0, RIGHT},
+                        {LEFT|BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT}
+                },
+                new int[][] {
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+                },
+                0, 0
+        ));
+
+    	designList.add(new MapDesign(
+                "S10B",
+                10, 10,
+                new int[][] {
+                        {LEFT|TOP|RIGHT, TOP|BOTTOM, TOP, TOP|RIGHT, TOP, TOP, TOP|RIGHT, TOP, TOP, TOP|RIGHT|BOTTOM},
+                        {LEFT, RIGHT, 0, 0, 0, 0, BOTTOM, 0, BOTTOM|RIGHT, RIGHT},
+                        {LEFT|RIGHT, 0, BOTTOM|RIGHT, 0, RIGHT, 0, 0, 0, BOTTOM, RIGHT},
+                        {LEFT, 0, RIGHT, 0, 0, 0, RIGHT, 0, 0, BOTTOM|RIGHT},
+                        {LEFT|BOTTOM, 0, 0, 0, BOTTOM|RIGHT, BOTTOM, 0, 0, RIGHT, RIGHT},
+                        {LEFT|RIGHT, RIGHT, 0, BOTTOM, RIGHT, 0, 0, 0, BOTTOM, RIGHT},
+                        {LEFT, BOTTOM, 0, 0, 0, 0, 0, BOTTOM, 0, BOTTOM|RIGHT},
+                        {LEFT, BOTTOM, BOTTOM, RIGHT, RIGHT, BOTTOM, 0, 0, 0, RIGHT},
+                        {LEFT|BOTTOM|RIGHT, 0, 0, 0, 0, BOTTOM, RIGHT, RIGHT, BOTTOM, RIGHT},
+                        {LEFT|BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT}
+                },
+                new int[][] {
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+                },
+                0, 0
+        ));
+
+    	designList.add(new MapDesign(
+                "S10C",
+                10, 10,
+                new int[][] {
+                        {LEFT|TOP|RIGHT, TOP|BOTTOM, TOP, TOP, TOP|RIGHT, TOP, TOP, TOP|BOTTOM, TOP|RIGHT, TOP|RIGHT},
+                        {LEFT, 0, RIGHT, 0, 0, 0, 0, 0, 0, RIGHT},
+                        {LEFT, 0, 0, 0, BOTTOM, 0, BOTTOM|RIGHT, 0, BOTTOM, RIGHT},
+                        {LEFT|RIGHT, 0, BOTTOM, 0, BOTTOM, 0, 0, 0, RIGHT, RIGHT},
+                        {LEFT|BOTTOM, 0, 0, 0, RIGHT, RIGHT, 0, 0, BOTTOM, RIGHT},
+                        {LEFT|RIGHT, RIGHT, 0, 0, 0, BOTTOM, 0, BOTTOM, 0, RIGHT},
+                        {LEFT, 0, 0, BOTTOM, 0, BOTTOM, 0, 0, RIGHT, RIGHT},
+                        {LEFT|RIGHT, 0, 0, RIGHT, BOTTOM, 0, 0, 0, 0, BOTTOM|RIGHT},
+                        {LEFT|BOTTOM, 0, 0, 0, RIGHT, 0, BOTTOM, RIGHT, BOTTOM, RIGHT},
+                        {LEFT|BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT}
+                },
+                new int[][] {
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 1, 0}
+                },
+                1, 0
+        ));
+    	
+    	designList.add(new MapDesign(
+                "S10D",
+                10, 10,
+                new int[][] {
+                        {LEFT|TOP|RIGHT, TOP|RIGHT, TOP, TOP, TOP|RIGHT, TOP, TOP|RIGHT, TOP|BOTTOM, TOP, TOP|RIGHT},
+                        {LEFT|RIGHT, 0, BOTTOM, 0, 0, 0, 0, 0, 0, RIGHT},
+                        {LEFT, 0, 0, RIGHT, RIGHT, 0, 0, RIGHT, 0, BOTTOM|RIGHT},
+                        {LEFT, RIGHT, 0, 0, 0, 0, BOTTOM, 0, 0, RIGHT},
+                        {LEFT|BOTTOM, 0, BOTTOM, 0, BOTTOM|RIGHT, BOTTOM, 0, BOTTOM|RIGHT, 0, BOTTOM|RIGHT},
+                        {LEFT, 0, BOTTOM, 0, RIGHT, 0, 0, BOTTOM, 0, RIGHT},
+                        {LEFT|BOTTOM, 0, BOTTOM, 0, 0, RIGHT, BOTTOM, 0, RIGHT, RIGHT},
+                        {LEFT, RIGHT, 0, BOTTOM, RIGHT, RIGHT, 0, 0, RIGHT, RIGHT},
+                        {LEFT|RIGHT, 0, 0, 0, 0, 0, 0, RIGHT, 0, RIGHT},
+                        {LEFT|BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT}
+                },
+                new int[][] {
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+                },
+                0, 0
+        ));
+    	
+    	designList.add(new MapDesign(
+                "S10E",
+                10, 10,
+                new int[][] {
+                        {LEFT|TOP, TOP|RIGHT, TOP, TOP, TOP, TOP|RIGHT, TOP, TOP|BOTTOM, TOP|RIGHT, TOP|RIGHT},
+                        {LEFT, BOTTOM|RIGHT, BOTTOM, 0, BOTTOM, 0, RIGHT, 0, 0, RIGHT},
+                        {LEFT|RIGHT, 0, 0, 0, 0, BOTTOM, 0, RIGHT, 0, RIGHT},
+                        {LEFT, 0, BOTTOM, RIGHT, 0, 0, BOTTOM, 0, 0, RIGHT},
+                        {LEFT|BOTTOM, 0, 0, 0, BOTTOM, RIGHT, 0, 0, BOTTOM, RIGHT},
+                        {LEFT, 0, RIGHT, BOTTOM, RIGHT, 0, RIGHT, 0, 0, BOTTOM|RIGHT},
+                        {LEFT, BOTTOM|RIGHT, 0, BOTTOM, 0, 0, BOTTOM, 0, 0, RIGHT},
+                        {LEFT|BOTTOM, 0, 0, RIGHT, 0, 0, 0, 0, BOTTOM|RIGHT, RIGHT},
+                        {LEFT, 0, 0, BOTTOM, 0, BOTTOM, 0, RIGHT, 0, RIGHT},
+                        {LEFT|BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM|RIGHT, BOTTOM, BOTTOM|RIGHT}
+                },
+                new int[][] {
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                },
+                1, 1
+        ));
+    	
         designList.add(new MapDesign(
 			"M5C",
 			5, 5,
