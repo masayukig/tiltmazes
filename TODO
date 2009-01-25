@@ -31,7 +31,7 @@ TODO:
 
 Bugs:
 - If started in landscape mode, the acceleration vector is not (always) corrected for rotation
-
+- Ball isRolling and target coordinates are not reset when changing levels -> can be fatal
 
 V1.1 - Bugfix release
 
@@ -41,3 +41,5 @@ V2.0 - New features release
 V3.0
 - Add support for hexa-roll: http://clickmazes.com/spin/ixspin.htm
 
+V4.0
+- Add mazes from http://www.bekkoame.ne.jp/~ishmnn/java/java.html / "Maze" section
