@@ -38,6 +38,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 
 public class TiltMazesActivity extends Activity {
@@ -47,17 +48,25 @@ public class TiltMazesActivity extends Activity {
 	private static final int MENU_MAP_PREV = 2;
 	private static final int MENU_MAP_NEXT = 3;
 	
+	private TextView mMazeNameLabel;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Log.d(this.toString(), "onCreate() called");
+
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		mView = new TiltMazesView(getApplicationContext(), this);
-		mView.setFocusable(true);
-		setContentView(mView);
+		setContentView(R.layout.game_layout);
+		
+		mView = (TiltMazesView) findViewById(R.id.maze_view);
+		
+		mMazeNameLabel = (TextView) findViewById(R.id.maze_name_label);
+		mView.setMazeNameLabel(mMazeNameLabel);
+		mMazeNameLabel.setText(getResources().getText(R.string.maze_label) + " " + mView.getMap().getName());
 	}
 
     @Override

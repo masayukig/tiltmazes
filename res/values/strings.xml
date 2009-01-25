@@ -4,5 +4,6 @@
 <string name="menu_restart">Restart</string>
 <string name="menu_map_prev">Previous</string>
 <string name="menu_map_next">Next</string>
+<string name="maze_label">Maze:</string>
 </resources>
 

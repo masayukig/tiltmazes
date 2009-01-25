@@ -35,7 +35,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.view.View;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -46,12 +45,14 @@ import android.os.SystemClock;
 import android.os.Vibrator;
 import android.os.Handler;
 import android.os.Message;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.GestureDetector;
 
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.view.KeyEvent;
+import android.widget.TextView;
 
 
 public class TiltMazesView extends View {
@@ -69,6 +70,7 @@ public class TiltMazesView extends View {
 	private float mAccelZ = 0;
 
 	private static float WALL_WIDTH = 5;
+	private int mWidth;
 	private float mXMin;
 	private float mYMin;
 	private float mXMax;
@@ -91,6 +93,9 @@ public class TiltMazesView extends View {
 
 	private Direction mCommandedRollDirection = Direction.NONE;
 
+	private TextView mMazeNameLabel;
+
+	
 	private final SensorListener mSensorAccelerometer = new SensorListener() {
 
 		public void onSensorChanged(int sensor, float[] values) {
@@ -118,8 +123,8 @@ public class TiltMazesView extends View {
 	};
 
 	
-	public TiltMazesView(Context context, Activity activity) {
-		super(context);
+	public TiltMazesView(Context context, AttributeSet attrs) {
+		super(context, attrs);
 
 		setFocusableInTouchMode(true);
 		
@@ -128,16 +133,17 @@ public class TiltMazesView extends View {
 		paint.setAntiAlias(true);
 
 		// Request vibrator service
-		mVibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+		mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
 		// Register the sensor listener
-		mSensorManager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE);
+		mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 		mSensorManager.registerListener(mSensorAccelerometer, SensorManager.SENSOR_ACCELEROMETER,
 				SensorManager.SENSOR_DELAY_GAME);
 
 		// Calculate geometry
 		int w = getWidth();
 		int h = getHeight();
+		mWidth = Math.min(w, h);
 		mXMin = WALL_WIDTH / 2;
 		mYMin = WALL_WIDTH / 2;
 		mXMax = Math.min(w, h) - WALL_WIDTH / 2;
@@ -228,6 +234,8 @@ public class TiltMazesView extends View {
 					mBall.setX(mMap.getInitialPositionX());
 					mBall.setY(mMap.getInitialPositionY());
 					mMap.init();
+					mMazeNameLabel.setText(getResources().getText(R.string.maze_label) + " " + mMap.getName());
+					mMazeNameLabel.invalidate();
 					invalidate();
 					return;
 				}
@@ -247,13 +255,25 @@ public class TiltMazesView extends View {
 			mTimer.schedule(redrawTask, 0, 1000/*ms*/ / 20);
 		}	
 	}
+	
+	public void setMazeNameLabel(TextView mazeNameLabel) {
+		mMazeNameLabel = mazeNameLabel;
+	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 
+		mWidth = Math.min(w, h);
 		mXMax = Math.min(w, h) - WALL_WIDTH / 2;
 		mYMax = mXMax;
+	}
+	
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		mWidth = Math.min(getMeasuredWidth(), getMeasuredHeight());
+		setMeasuredDimension(mWidth, mWidth);	
 	}
 
 	@Override
@@ -300,10 +320,6 @@ public class TiltMazesView extends View {
 		drawGoals(canvas);
 		drawBall(canvas);
 
-		// TODO(leczbalazs): put this into a proper layout 
-		paint.setColor(Color.RED);
-		canvas.drawText(mMap.getName(), 20, 30, paint);
-		
 		if (DEBUG) {
 			drawDirection(canvas);
 			// Print FPS
@@ -344,6 +360,10 @@ public class TiltMazesView extends View {
 		return 1000 * n / avg;
 	}
 
+	public Map getMap() {
+		return mMap;
+	}
+	
 	public void vibrate(long milliseconds) {
 		mVibrator.vibrate(milliseconds);
 	}
