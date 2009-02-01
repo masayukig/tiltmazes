@@ -37,35 +37,49 @@ import java.util.TimerTask;
 import android.os.SystemClock;
 
 public class Ball {
-	private TiltMazesView mParentView;
-	
+    private GameEngine mEngine;
+    private Map mMap;
+    private TiltMazesView mMazeView;
+
+	// Current position
 	private float mX = 0;
 	private float mY = 0;
+	
+	// Target position
 	private int mXTarget;
 	private int mYTarget;
-	private int mVX = 0;
-	private int mVY = 0;
-	private static float SPEED_MULTIPLIER = 0.005f; // Speed
+
+	// Speed
+	private int mVX = 0; // -1, 0 or 1
+	private int mVY = 0; // -1, 0 or 1
 	
+	// On-screen speed
+	private static float SPEED_MULTIPLIER = 0.005f;
+	
+	// Time
 	private long mT1;
 	private long mT2;
     private static final int DT_TARGET = 1000/25; // Target time step (ms)
+    
+    // Timer to schedule simulation steps
     private Timer mTimer;
-
-    private Map mMap;
 	
 	private boolean mIsRolling = false;
 	private Direction mRollDirection = Direction.NONE;
 	
-	public Ball(TiltMazesView view, Map map, int init_x, int init_y) {
-		mParentView = view;
+	public Ball(GameEngine engine, Map map, int init_x, int init_y) {
+		mEngine = engine;
 		mMap = map; 
 		mX = init_x;
 		mY = init_y;
 		mXTarget = init_x;
 		mYTarget = init_y;
 	}
-	
+
+	public void setMazeView(TiltMazesView mazeView) {
+		mMazeView = mazeView;
+	}
+
 	public void setMap(Map map) {
 		mMap = map;
 	}
@@ -194,7 +208,7 @@ public class Ball {
 			// FIXME(leczbalazs): maybe it's not the Ball's repsonibility to actually remove
 			// the goal from the map
 			mMap.removeGoal(Math.round(mX), Math.round(mY));
-			mParentView.sendEmptyMessage(Messages.MSG_REACHED_GOAL);
+			mEngine.sendEmptyMessage(Messages.MSG_REACHED_GOAL);
 		}
 		
 		// Stop rolling if we have reached the target position
@@ -206,12 +220,12 @@ public class Ball {
 			mTimer.cancel();
 
 			// Send MSG_REACHED_WALL message to the parent View
-			mParentView.sendEmptyMessage(Messages.MSG_REACHED_WALL);
+			mEngine.sendEmptyMessage(Messages.MSG_REACHED_WALL);
 		}
 		
-		// Send invalidate message to the parent View,
-		// so that it gets redrawn during the next cycle.
-		mParentView.postInvalidate();
+        // Send invalidate message to the parent View,
+        // so that it gets redrawn during the next cycle.
+        mMazeView.postInvalidate();
 	}
 	
 	public Direction getRollDirection() {

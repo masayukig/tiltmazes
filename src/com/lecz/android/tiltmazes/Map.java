@@ -57,8 +57,16 @@ public class Map {
 		return mDesign.getName();
 	}
 
+	public int[][] getWalls() {
+		return mDesign.getWalls();
+	}
+
 	public int getWalls(int x, int y) {
 		return mDesign.getWalls(x, y);
+	}
+
+	public int[][] getGoals() {
+		return mGoals;
 	}
 
 	public int getGoal(int x, int y) {

@@ -34,8 +34,11 @@ package com.lecz.android.tiltmazes;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -49,7 +52,9 @@ public class TiltMazesActivity extends Activity {
 	private static final int MENU_MAP_NEXT = 3;
 	
 	private TextView mMazeNameLabel;
-
+	private GestureDetector mGestureDetector;
+	private GameEngine mGameEngine;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(this.toString(), "onCreate() called");
@@ -61,14 +66,75 @@ public class TiltMazesActivity extends Activity {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.game_layout);
-		
+
+		mGameEngine = new GameEngine(getApplicationContext());
 		mView = (TiltMazesView) findViewById(R.id.maze_view);
+		mGameEngine.setTiltMazesView(mView);
+		mView.setGameEngine(mGameEngine);
+		mView.calculateUnit();
 		
 		mMazeNameLabel = (TextView) findViewById(R.id.maze_name_label);
-		mView.setMazeNameLabel(mMazeNameLabel);
-		mMazeNameLabel.setText(getResources().getText(R.string.maze_label) + " " + mView.getMap().getName());
+		mGameEngine.setMazeNameLabel(mMazeNameLabel);
+		mMazeNameLabel.setText(getResources().getText(R.string.maze_label) + " " + mGameEngine.getMap().getName());
+		
+		// Create gesture detector to detect flings
+		mGestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+			@Override
+			public boolean onDown(MotionEvent e) {
+				return true;
+			}
+						
+			@Override
+			public boolean onFling(MotionEvent e1, MotionEvent e2,
+					float velocityX, float velocityY) {
+				// Roll the ball in the direction of the fling				
+				Direction mCommandedRollDirection = Direction.NONE;
+				
+				if (Math.abs(velocityX) > Math.abs(velocityY)) {
+					if (velocityX < 0)	mCommandedRollDirection = Direction.LEFT;
+					else				mCommandedRollDirection = Direction.RIGHT;
+				}
+				else {
+					if (velocityY < 0)	mCommandedRollDirection = Direction.UP;
+					else 				mCommandedRollDirection = Direction.DOWN;
+				}
+
+				if (mCommandedRollDirection != Direction.NONE) {
+					mGameEngine.rollBall(mCommandedRollDirection);
+				}
+				
+				return true;
+			}
+		});
+		mGestureDetector.setIsLongpressEnabled(false);
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		return mGestureDetector.onTouchEvent(event);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_DPAD_LEFT:
+			mGameEngine.rollBall(Direction.LEFT);
+			return true;
+		case KeyEvent.KEYCODE_DPAD_RIGHT:
+			mGameEngine.rollBall(Direction.RIGHT);
+			return true;
+		case KeyEvent.KEYCODE_DPAD_UP:
+			mGameEngine.rollBall(Direction.UP);
+			return true;
+		case KeyEvent.KEYCODE_DPAD_DOWN:
+			mGameEngine.rollBall(Direction.DOWN);
+			return true;
+
+		default:
+			return false;
+		}
+	}
+	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -88,13 +154,13 @@ public class TiltMazesActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case MENU_RESTART:
-        	mView.sendEmptyMessage(Messages.MSG_RESTART);
+        	mGameEngine.sendEmptyMessage(Messages.MSG_RESTART);
             return true;
         case MENU_MAP_PREV:
-        	mView.sendEmptyMessage(Messages.MSG_MAP_PREVIOUS);
+        	mGameEngine.sendEmptyMessage(Messages.MSG_MAP_PREVIOUS);
             return true;
         case MENU_MAP_NEXT:
-        	mView.sendEmptyMessage(Messages.MSG_MAP_NEXT);
+        	mGameEngine.sendEmptyMessage(Messages.MSG_MAP_NEXT);
             return true;        	
         }
         
@@ -122,7 +188,7 @@ public class TiltMazesActivity extends Activity {
 		Log.d(this.toString(), "onPause() called");
 
 		super.onPause();
-		mView.unregisterListener();
+		mGameEngine.unregisterListener();
 	}
 
 	@Override
@@ -130,7 +196,7 @@ public class TiltMazesActivity extends Activity {
 		Log.d(this.toString(), "onResume() called");
 
 		super.onResume();
-		mView.registerListener();
+		mGameEngine.registerListener();
 	}
 
 	@Override
@@ -138,7 +204,7 @@ public class TiltMazesActivity extends Activity {
 		Log.d(this.toString(), "onSaveInstanceState() called");
 
 		super.onSaveInstanceState(icicle);
-		mView.unregisterListener();
+		mGameEngine.unregisterListener();
 	}
 	
 	@Override

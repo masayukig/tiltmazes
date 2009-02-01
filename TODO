@@ -1,9 +1,11 @@
-V0.1 - Developer-forum release
-
 V1.0 - First Android Market release
 
 TODO:
-P1 - Refactor: move game logic out of TiltMazesMainView into a separate class (it's very messy currently)
+P1 - Add the following functionality to GameEngine:
+		Handle the game lifecycle
+			- save/restore state
+		Handle SOLVED event
+		Enable/disable accelerometer		
 P1 - Add "About" menu item with copyright info and rules
 P1 - Add "solved" detection (actually: add full game state machine)
 P1 - Implement life-cycle management properly (start, stop, pause, resume, save, restore, destroy)
@@ -20,6 +22,7 @@ P3 - Add proper logging
 P3 - Name unnamed numeric constants
 
 P4 - Add icon for every level design
+P4 - Correct indentation in .java files
 
 Q: Maybe we could do away with only BOTTOM and RIGHT walls (if boundaries are already handled as walls), but it's not that important
 
@@ -28,13 +31,16 @@ Bugs:
 - Ball isRolling and target coordinates are not reset when changing levels -> can be fatal
 
 
-V1.1 - Bugfix release
+V1.1 - Bugfix + speedup release
+P1 - Fix reported bugs
+P1 - Speed up the code according to suggestions at http://code.google.com/android/toolbox/performance.html
+
 
 V2.0 - New features release
 - Add support for tilt puzzles: http://clickmazes.com/newtilt/ixtilt.htm
 
-V3.0
+V3.0 - New features release
 - Add support for hexa-roll: http://clickmazes.com/spin/ixspin.htm
 
-V4.0
+V4.0 - New features release
 - Add mazes from http://www.bekkoame.ne.jp/~ishmnn/java/java.html / "Maze" section

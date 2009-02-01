@@ -65,6 +65,10 @@ public class MapDesign {
 		return mName;
 	}
 
+	public int[][] getWalls() {
+		return mWalls;
+	}
+
 	public int getWalls(int x, int y) {
 		return mWalls[y][x];
 	}
