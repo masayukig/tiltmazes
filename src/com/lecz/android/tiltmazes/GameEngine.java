@@ -31,6 +31,7 @@
 
 package com.lecz.android.tiltmazes;
 
+import android.os.Bundle;
 import android.content.Context;
 import android.os.Vibrator;
 import android.os.Handler;
@@ -62,7 +63,7 @@ public class GameEngine {
 	private Direction mCommandedRollDirection = Direction.NONE;
 
 	private TextView mMazeNameLabel;
-	private TiltMazesView mMazeView;
+	private MazeView mMazeView;
 
 	
 	private final SensorListener mSensorAccelerometer = new SensorListener() {
@@ -150,15 +151,7 @@ public class GameEngine {
 					else {
 						mCurrentMap = (mCurrentMap + 1) % MapDesigns.designList.size();
 					}
-					mMap = new Map(MapDesigns.designList.get(mCurrentMap));
-					mBall.setMap(mMap);
-					mBall.setX(mMap.getInitialPositionX());
-					mBall.setY(mMap.getInitialPositionY());
-					mMap.init();
-					mMazeNameLabel.setText(mContext.getResources().getText(R.string.maze_label) + " " + mMap.getName());
-					mMazeNameLabel.invalidate();
-					mMazeView.calculateUnit();
-					mMazeView.invalidate();
+					loadMap(mCurrentMap);
 					return;
 				}
 					
@@ -178,11 +171,23 @@ public class GameEngine {
 //		}	
 	}
 	
+	private void loadMap(int mapID) {
+		mMap = new Map(MapDesigns.designList.get(mCurrentMap));
+		mBall.setMap(mMap);
+		mBall.setX(mMap.getInitialPositionX());
+		mBall.setY(mMap.getInitialPositionY());
+		mMap.init();
+		mMazeNameLabel.setText(mContext.getResources().getText(R.string.maze_label) + " " + mMap.getName());
+		mMazeNameLabel.invalidate();
+		mMazeView.calculateUnit();
+		mMazeView.invalidate();		
+	}
+	
 	public void setMazeNameLabel(TextView mazeNameLabel) {
 		mMazeNameLabel = mazeNameLabel;
 	}
 	
-	public void setTiltMazesView(TiltMazesView mazeView) {
+	public void setTiltMazesView(MazeView mazeView) {
 		mMazeView = mazeView;
 		mBall.setMazeView(mazeView);
 	}
@@ -219,5 +224,37 @@ public class GameEngine {
 	
 	public void vibrate(long milliseconds) {
 		mVibrator.vibrate(milliseconds);
+	}
+	
+	public void saveState(Bundle icicle) {
+		icicle.putInt("map.id", mCurrentMap);
+		
+		int[][] goals = mMap.getGoals();
+		int sizeX = mMap.getSizeX();
+		int sizeY = mMap.getSizeY();
+		int[] goalsToSave = new int[sizeX * sizeY];
+		for (int y = 0; y < sizeY; y++)
+			for (int x = 0; x < sizeX; x++)
+				goalsToSave[y + x * sizeX] = goals[y][x];
+		icicle.putIntArray("map.goals", goalsToSave);
+		
+		icicle.putInt("ball.x", Math.round(mBall.getX()));
+		icicle.putInt("ball.y", Math.round(mBall.getY()));
+	}
+	
+	public void restoreState(Bundle icicle) {
+		if (icicle == null) return;
+		
+		loadMap(icicle.getInt("map.id"));
+
+		int[] goals = icicle.getIntArray("map.goals");
+		int sizeX = mMap.getSizeX();
+		int sizeY = mMap.getSizeY();
+		for (int y = 0; y < sizeY; y++)
+			for (int x = 0; x < sizeX; x++)
+				mMap.setGoal(x, y, goals[y + x * sizeX]);
+		
+		mBall.setX(icicle.getInt("ball.x"));
+		mBall.setY(icicle.getInt("ball.y"));
 	}
 }

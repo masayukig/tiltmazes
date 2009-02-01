@@ -77,6 +77,10 @@ public class Map {
 		mGoalCount = mGoalCount - mGoals[y][x];
 		mGoals[y][x] = 0;
 	}
+	
+	public void setGoal(int x, int y, int value) {
+		mGoals[y][x] = value;
+	}
 
 	public int getSizeX() {
 		return mDesign.getSizeY();

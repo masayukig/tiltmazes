@@ -48,7 +48,7 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 
 
-public class TiltMazesView extends View {
+public class MazeView extends View {
 	private boolean DEBUG = false;
 
 	private static final float WALL_WIDTH = 5;	
@@ -88,7 +88,7 @@ public class TiltMazesView extends View {
 	private long[] mDrawTimeHistory = new long[mDrawTimeHistorySize];
 	
 	
-	public TiltMazesView(Context context, AttributeSet attrs) {
+	public MazeView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
 		// Set up default Paint values
@@ -104,8 +104,8 @@ public class TiltMazesView extends View {
 		mXMax = Math.min(w, h) - WALL_WIDTH / 2;
 		mYMax = mXMax;
 				
-		// Schedule a redraw at 25 Hz
 		if (DEBUG) {
+			// Schedule a redraw at 25 Hz
 			TimerTask redrawTask = new TimerTask() {
 				public void run() {
 					postInvalidate();
@@ -285,41 +285,5 @@ public class TiltMazesView extends View {
 				paint
 		);
 		paint.setShader(null);
-
-		// Draw target position
-//		if (DEBUG) {
-//			paint.setStrokeWidth(1);
-//			paint.setColor(Color.MAGENTA);
-//			paint.setStyle(Style.STROKE);
-//			canvas.drawCircle(
-//					mXMin + (mBall.getXTarget() + 0.5f) * mUnit,
-//					mYMin + (mBall.getYTarget() + 0.5f) * mUnit,
-//					mUnit * 0.4f,
-//					paint
-//			);
-//		}
-	}
-
-//	private void drawDirection(Canvas canvas) {
-//		paint.setColor(Color.GREEN);
-//		paint.setStrokeWidth(5);
-//		canvas.drawLine(mXMax / 2, mYMax / 2, mXMax / 2 + mAccelX * 10, mYMax / 2 - mAccelY * 10, paint);
-//
-//		paint.setColor(Color.RED);
-//		if (mCommandedRollDirection == Direction.NONE) {
-//			canvas.drawCircle(mXMax / 2, mYMax / 2, 5, paint);
-//		}
-//		else {
-//			int x = 0;
-//			int y = 0;
-//			switch (mCommandedRollDirection) {
-//			case LEFT: { x = -1; y =  0; break;}
-//			case RIGHT:{ x =  1; y =  0; break;}
-//			case UP:   { x =  0; y = -1; break;}
-//			case DOWN: { x =  0; y =  1; break;}
-//			}
-//			canvas.drawLine(mXMax / 2, mYMax / 2, mXMax / 2 + x * 20, mYMax / 2 + y * 20, paint);
-//		}
-//	}
-	
+	}	
 }

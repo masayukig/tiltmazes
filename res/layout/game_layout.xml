@@ -40,7 +40,7 @@
     android:layout_height="fill_parent" android:background="@color/background">
 
     <!-- Main image -->
-    <com.lecz.android.tiltmazes.TiltMazesView android:id="@+id/maze_view"
+    <com.lecz.android.tiltmazes.MazeView android:id="@+id/maze_view"
     		   android:layout_width="fill_parent"
     		   android:layout_height="1dip"
                android:layout_weight="1"

@@ -45,11 +45,12 @@ import android.widget.TextView;
 
 
 public class TiltMazesActivity extends Activity {
-	private TiltMazesView mView;
+	private MazeView mMazeView;
 	
 	private static final int MENU_RESTART = 1;
 	private static final int MENU_MAP_PREV = 2;
 	private static final int MENU_MAP_NEXT = 3;
+	
 	
 	private TextView mMazeNameLabel;
 	private GestureDetector mGestureDetector;
@@ -68,10 +69,10 @@ public class TiltMazesActivity extends Activity {
 		setContentView(R.layout.game_layout);
 
 		mGameEngine = new GameEngine(getApplicationContext());
-		mView = (TiltMazesView) findViewById(R.id.maze_view);
-		mGameEngine.setTiltMazesView(mView);
-		mView.setGameEngine(mGameEngine);
-		mView.calculateUnit();
+		mMazeView = (MazeView) findViewById(R.id.maze_view);
+		mGameEngine.setTiltMazesView(mMazeView);
+		mMazeView.setGameEngine(mGameEngine);
+		mMazeView.calculateUnit();
 		
 		mMazeNameLabel = (TextView) findViewById(R.id.maze_name_label);
 		mGameEngine.setMazeNameLabel(mMazeNameLabel);
@@ -107,6 +108,8 @@ public class TiltMazesActivity extends Activity {
 			}
 		});
 		mGestureDetector.setIsLongpressEnabled(false);
+		
+		mGameEngine.restoreState(savedInstanceState);
 	}
 
 	@Override
@@ -204,6 +207,8 @@ public class TiltMazesActivity extends Activity {
 		Log.d(this.toString(), "onSaveInstanceState() called");
 
 		super.onSaveInstanceState(icicle);
+
+		mGameEngine.saveState(icicle);
 		mGameEngine.unregisterListener();
 	}
 	
@@ -211,8 +216,9 @@ public class TiltMazesActivity extends Activity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		Log.d(this.toString(), "onRestoreInstanceState() called");
 
-		// TODO Auto-generated method stub
 		super.onRestoreInstanceState(savedInstanceState);
+		
+		mGameEngine.restoreState(savedInstanceState);
 	}
 
 	@Override

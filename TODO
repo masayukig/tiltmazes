@@ -4,10 +4,12 @@ TODO:
 P1 - Add the following functionality to GameEngine:
 		Handle the game lifecycle
 			- save/restore state
+				- save goals
+				- save accelerometer enabled/disabled status
 		Handle SOLVED event
 		Enable/disable accelerometer		
 P1 - Add "About" menu item with copyright info and rules
-P1 - Add "solved" detection (actually: add full game state machine)
+P1 - Add "solved" detection
 P1 - Implement life-cycle management properly (start, stop, pause, resume, save, restore, destroy)
 P1 - Add all level designs from http://clickmazes.com/newtilt/ixtilt2d.htm
 P1 - Display number of remaining goals

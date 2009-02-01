@@ -39,7 +39,7 @@ import android.os.SystemClock;
 public class Ball {
     private GameEngine mEngine;
     private Map mMap;
-    private TiltMazesView mMazeView;
+    private MazeView mMazeView;
 
 	// Current position
 	private float mX = 0;
@@ -76,7 +76,7 @@ public class Ball {
 		mYTarget = init_y;
 	}
 
-	public void setMazeView(TiltMazesView mazeView) {
+	public void setMazeView(MazeView mazeView) {
 		mMazeView = mazeView;
 	}
 

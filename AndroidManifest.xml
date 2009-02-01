@@ -36,13 +36,14 @@
     package="com.lecz.android.tiltmazes" android:versionCode="1" android:versionName="0.1">
 
     <application android:label="TiltMazes" android:icon="@drawable/tiltmazes_icon">
-        <activity android:name="TiltMazesActivity">
+        <activity android:name="TiltMazesActivity" android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+    
+</application>
 
 <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 
