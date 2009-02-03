@@ -139,19 +139,20 @@ public class GameEngine {
 				
 				case Messages.MSG_MAP_PREVIOUS:
 				case Messages.MSG_MAP_NEXT:
+					int mapToLoad = 0;
 					if (msg.what == Messages.MSG_MAP_PREVIOUS) {
 						if (mCurrentMap == 0) {
 							// Wrap around
-							mCurrentMap = MapDesigns.designList.size() - 1;
+							mapToLoad = MapDesigns.designList.size() - 1;
 						}
 						else {
-							mCurrentMap = (mCurrentMap - 1) % MapDesigns.designList.size();
+							mapToLoad = (mCurrentMap - 1) % MapDesigns.designList.size();
 						}
 					}
 					else {
-						mCurrentMap = (mCurrentMap + 1) % MapDesigns.designList.size();
+						mapToLoad = (mCurrentMap + 1) % MapDesigns.designList.size();
 					}
-					loadMap(mCurrentMap);
+					loadMap(mapToLoad);
 					return;
 				}
 					
@@ -172,6 +173,7 @@ public class GameEngine {
 	}
 	
 	private void loadMap(int mapID) {
+		mCurrentMap = mapID;
 		mMap = new Map(MapDesigns.designList.get(mCurrentMap));
 		mBall.setMap(mMap);
 		mBall.setX(mMap.getInitialPositionX());
@@ -227,6 +229,8 @@ public class GameEngine {
 	}
 	
 	public void saveState(Bundle icicle) {
+		mBall.stop();
+		
 		icicle.putInt("map.id", mCurrentMap);
 		
 		int[][] goals = mMap.getGoals();
@@ -245,9 +249,13 @@ public class GameEngine {
 	public void restoreState(Bundle icicle) {
 		if (icicle == null) return;
 		
-		loadMap(icicle.getInt("map.id"));
+		int mapID = icicle.getInt("map.id", -1);
+		if (mapID == -1) return;
+		loadMap(mapID);
 
 		int[] goals = icicle.getIntArray("map.goals");
+		if (goals == null) return;
+		
 		int sizeX = mMap.getSizeX();
 		int sizeY = mMap.getSizeY();
 		for (int y = 0; y < sizeY; y++)
@@ -256,5 +264,7 @@ public class GameEngine {
 		
 		mBall.setX(icicle.getInt("ball.x"));
 		mBall.setY(icicle.getInt("ball.y"));
+		
+		mMazeView.invalidate();
 	}
 }

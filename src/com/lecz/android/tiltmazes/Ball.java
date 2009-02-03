@@ -161,6 +161,16 @@ public class Ball {
 		mTimer.schedule(simTask, 0, DT_TARGET);
 	}
 	
+	public void stop() {
+		if (!mIsRolling) return;
+		
+		mTimer.cancel();
+		mIsRolling = false;
+		mX = mXTarget;
+		mY = mYTarget;
+		mMazeView.postInvalidate();
+	}
+	
 	private void doStep() {
 		// Calculate elapsed time since last step
 		mT2 = SystemClock.elapsedRealtime();
@@ -241,11 +251,11 @@ public class Ball {
 	}
 	
 	public void setX(float x) {
-		this.mX = x;
+		mX = x;
 	}
 	
 	public void setY(float y) {
-		this.mY = y;
+		mY = y;
 	}
 	
 	public float getXTarget() {
