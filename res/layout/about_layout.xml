@@ -32,21 +32,19 @@
  */
 -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lecz.android.tiltmazes" android:versionCode="1" android:versionName="0.1">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/background" android:layout_height="wrap_content" android:layout_width="wrap_content">
 
-    <application android:label="TiltMazes" android:icon="@drawable/tiltmazes_icon">
-        <activity android:name="TiltMazesActivity" android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name="AboutActivity" android:excludeFromRecents="true" android:stateNotNeeded="true">
-        </activity>
-    
-</application>
+    <TextView 
+        android:id="@+id/about_label"
+        android:layout_height="wrap_content"
+        android:text="TiltMazes - A logical game for Android"
+        android:singleLine="false"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:editable="false"
+        android:layout_gravity="center_vertical|center" android:gravity="center_vertical|center" android:layout_margin="5dip" android:paddingTop="10dip" android:layout_width="wrap_content"/>
 
-<uses-permission android:name="android.permission.VIBRATE"></uses-permission>
-
-</manifest>
+</LinearLayout>

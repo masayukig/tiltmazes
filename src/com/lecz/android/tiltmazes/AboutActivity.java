@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
 /*
  * Copyright (c) 2009, Balazs Lecz <leczbalazs@gmail.com>
  * All rights reserved.
@@ -7,14 +5,14 @@
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  * 
- *  * Redistributions of source code must retain the above copyright notice,
+ *     * Redistributions of source code must retain the above copyright notice,
  *       this list of conditions and the following disclaimer.
  * 
- *  * Redistributions in binary form must reproduce the above copyright notice,
+ *     * Redistributions in binary form must reproduce the above copyright notice,
  *       this list of conditions and the following disclaimer in the documentation
  *       and/or other materials provided with the distribution.
  * 
- *  * Neither the name of Balazs Lecz nor the names of
+ *     * Neither the name of Balazs Lecz nor the names of
  *       contributors may be used to endorse or promote products derived from this
  *       software without specific prior written permission.
  * 
@@ -28,25 +26,20 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * 
  */
--->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lecz.android.tiltmazes" android:versionCode="1" android:versionName="0.1">
+package com.lecz.android.tiltmazes;
 
-    <application android:label="TiltMazes" android:icon="@drawable/tiltmazes_icon">
-        <activity android:name="TiltMazesActivity" android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name="AboutActivity" android:excludeFromRecents="true" android:stateNotNeeded="true">
-        </activity>
-    
-</application>
+import android.app.Activity;
+import android.os.Bundle;
 
-<uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 
-</manifest>
+public class AboutActivity extends Activity {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setTheme(android.R.style.Theme_Dialog);
+		setContentView(R.layout.about_layout);
+	}
+}

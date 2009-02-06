@@ -527,7 +527,7 @@ public final class MapDesigns {
 						{1, 0, 0, 0, 0, 1},
 						{0, 0, 0, 0, 0, 0},
 						{1, 0, 0, 0, 0, 0},
-						{0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 1, 0, 0},
 						{0, 1, 0, 0, 0, 1},
 						{1, 0, 0, 1, 0, 0}
 				},
@@ -710,6 +710,36 @@ public final class MapDesigns {
 	                    {1, 0, 0, 0, 1, 0, 0, 0, 0, 1}
 	            },
 	            5, 6
+		));
+		
+		designList.add(new MapDesign(
+	            "M10B",
+	            10, 10,
+	            new int[][] {
+	                    {LEFT|TOP, TOP|RIGHT, TOP, TOP|RIGHT, TOP, TOP|BOTTOM, TOP, TOP|RIGHT, TOP, TOP|RIGHT},
+	                    {LEFT, BOTTOM, RIGHT, 0, 0, BOTTOM, 0, BOTTOM, 0, RIGHT},
+	                    {LEFT|BOTTOM, RIGHT, 0, 0, 0, RIGHT, 0, 0, BOTTOM|RIGHT, RIGHT},
+	                    {LEFT, 0, BOTTOM|RIGHT, 0, 0, 0, RIGHT, 0, 0, RIGHT},
+	                    {LEFT|RIGHT, 0, 0, 0, BOTTOM|RIGHT, 0, 0, BOTTOM, RIGHT, RIGHT},
+	                    {LEFT, RIGHT, RIGHT, BOTTOM, 0, RIGHT, 0, BOTTOM, 0, BOTTOM|RIGHT},
+	                    {LEFT|BOTTOM, 0, 0, 0, 0, BOTTOM, 0, RIGHT, RIGHT, RIGHT},
+	                    {LEFT, 0, RIGHT, 0, 0, 0, 0, 0, BOTTOM, RIGHT},
+	                    {LEFT, BOTTOM, 0, 0, BOTTOM|RIGHT, RIGHT, BOTTOM, 0, RIGHT, RIGHT},
+	                    {LEFT|BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT, BOTTOM, BOTTOM, BOTTOM, BOTTOM, BOTTOM, BOTTOM|RIGHT}
+	            },
+	            new int[][] {
+	                    {0, 0, 0, 1, 0, 0, 0, 1, 0, 1},
+	                    {0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+	                    {0, 0, 1, 0, 0, 1, 0, 0, 1, 0},
+	                    {1, 0, 0, 1, 0, 0, 0, 1, 0, 0},
+	                    {0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+	                    {0, 1, 0, 0, 0, 0, 1, 0, 0, 0},
+	                    {0, 0, 0, 1, 0, 0, 0, 1, 0, 0},
+	                    {1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+	                    {0, 1, 0, 0, 1, 0, 0, 0, 1, 0},
+	                    {0, 0, 1, 0, 0, 0, 1, 0, 0, 0}
+	            },
+	            5, 4
 		));
 	}
 	

@@ -1,6 +1,7 @@
 V1.0 - First Android Market release
 
 TODO:
+
 P1 - Add the following functionality to GameEngine:
 		Handle the game lifecycle
 			- save/restore state
@@ -8,10 +9,8 @@ P1 - Add the following functionality to GameEngine:
 				- save accelerometer enabled/disabled status
 		Handle SOLVED event
 		Enable/disable accelerometer		
-P1 - Add "About" menu item with copyright info and rules
+P1 - Add "About" menu item that displays a Dialog with name, icon, description and copyright info
 P1 - Add "solved" detection
-P1 - Implement life-cycle management properly (start, stop, pause, resume, save, restore, destroy)
-P1 - Add all level designs from http://clickmazes.com/newtilt/ixtilt2d.htm
 P1 - Display number of remaining goals
 P1 - Display number of steps taken
 P1 - Create separate layout for landscape mode
@@ -22,6 +21,7 @@ P2 - Add "high-scores" functionality (score = number of steps? time? or 1/(time 
 P3 - Add maze selection from a proper List view
 P3 - Add proper logging
 P3 - Name unnamed numeric constants
+P3 - Separate Wall drawing from Ball drawing using FrameLayout
 
 P4 - Add icon for every level design
 P4 - Correct indentation in .java files
