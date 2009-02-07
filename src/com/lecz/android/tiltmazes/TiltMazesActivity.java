@@ -32,7 +32,7 @@
 package com.lecz.android.tiltmazes;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -53,7 +53,7 @@ public class TiltMazesActivity extends Activity {
 	private static final int MENU_MAP_NEXT = 3;
 	private static final int MENU_ABOUT = 4;
 	
-	private Intent aboutIntent;
+	private Dialog aboutDialog;
 	
 	private TextView mMazeNameLabel;
 	private GestureDetector mGestureDetector;
@@ -65,7 +65,13 @@ public class TiltMazesActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 		
-		aboutIntent = new Intent(TiltMazesActivity.this, AboutActivity.class);
+		// Build the About Dialog
+		aboutDialog = new Dialog(TiltMazesActivity.this);
+		aboutDialog.setCancelable(true);
+		aboutDialog.setCanceledOnTouchOutside(true);
+		aboutDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		aboutDialog.setContentView(R.layout.about_layout);
+
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -155,6 +161,7 @@ public class TiltMazesActivity extends Activity {
         menu.findItem(MENU_MAP_PREV).setIcon(getResources().getDrawable(android.R.drawable.ic_media_previous));
         menu.findItem(MENU_RESTART).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_rotate));
         menu.findItem(MENU_MAP_NEXT).setIcon(getResources().getDrawable(android.R.drawable.ic_media_next));
+        menu.findItem(MENU_ABOUT).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
         
         return true;
     }
@@ -172,7 +179,8 @@ public class TiltMazesActivity extends Activity {
         	mGameEngine.sendEmptyMessage(Messages.MSG_MAP_NEXT);
             return true;        	
         case MENU_ABOUT:
-        	startActivity(aboutIntent);
+        	aboutDialog.show();
+        	return true;
         }	
         
         return false;

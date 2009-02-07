@@ -9,7 +9,6 @@ P1 - Add the following functionality to GameEngine:
 				- save accelerometer enabled/disabled status
 		Handle SOLVED event
 		Enable/disable accelerometer		
-P1 - Add "About" menu item that displays a Dialog with name, icon, description and copyright info
 P1 - Add "solved" detection
 P1 - Display number of remaining goals
 P1 - Display number of steps taken
