@@ -10,7 +10,6 @@ P1 - Add the following functionality to GameEngine:
 		Handle SOLVED event
 		Enable/disable accelerometer		
 P1 - Add "solved" detection
-P1 - Display number of remaining goals
 P1 - Display number of steps taken
 P1 - Create separate layout for landscape mode
 

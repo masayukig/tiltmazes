@@ -63,6 +63,7 @@ public class GameEngine {
 	private Direction mCommandedRollDirection = Direction.NONE;
 
 	private TextView mMazeNameLabel;
+	private TextView mRemainingGoalsLabel;
 	private MazeView mMazeView;
 
 	
@@ -123,6 +124,8 @@ public class GameEngine {
 					return;
 				
 				case Messages.MSG_REACHED_GOAL:
+					mRemainingGoalsLabel.setText("" + mMap.getGoalCount());
+					mRemainingGoalsLabel.invalidate();
 					vibrate(100);
 					return;
 				
@@ -179,14 +182,23 @@ public class GameEngine {
 		mBall.setX(mMap.getInitialPositionX());
 		mBall.setY(mMap.getInitialPositionY());
 		mMap.init();
-		mMazeNameLabel.setText(mContext.getResources().getText(R.string.maze_label) + " " + mMap.getName());
+		
+		mMazeNameLabel.setText(mMap.getName());
 		mMazeNameLabel.invalidate();
+		
+		mRemainingGoalsLabel.setText("" + mMap.getGoalCount());
+		mRemainingGoalsLabel.invalidate();
+		
 		mMazeView.calculateUnit();
 		mMazeView.invalidate();		
 	}
 	
 	public void setMazeNameLabel(TextView mazeNameLabel) {
 		mMazeNameLabel = mazeNameLabel;
+	}
+	
+	public void setRemainingGoalsLabel(TextView remainingGoalsLabel) {
+		mRemainingGoalsLabel = remainingGoalsLabel;
 	}
 	
 	public void setTiltMazesView(MazeView mazeView) {

@@ -97,4 +97,8 @@ public class Map {
 	public int getInitialPositionY() {
 		return mDesign.getInitialPositionY();
 	}
+	
+	public int getGoalCount() {
+		return mGoalCount;
+	}
 }

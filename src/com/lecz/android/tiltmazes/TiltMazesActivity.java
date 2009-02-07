@@ -56,6 +56,8 @@ public class TiltMazesActivity extends Activity {
 	private Dialog aboutDialog;
 	
 	private TextView mMazeNameLabel;
+	private TextView mRemainingGoalsLabel;
+
 	private GestureDetector mGestureDetector;
 	private GameEngine mGameEngine;
 	
@@ -85,9 +87,13 @@ public class TiltMazesActivity extends Activity {
 		mMazeView.setGameEngine(mGameEngine);
 		mMazeView.calculateUnit();
 		
-		mMazeNameLabel = (TextView) findViewById(R.id.maze_name_label);
+		mMazeNameLabel = (TextView) findViewById(R.id.maze_name);
 		mGameEngine.setMazeNameLabel(mMazeNameLabel);
-		mMazeNameLabel.setText(getResources().getText(R.string.maze_label) + " " + mGameEngine.getMap().getName());
+		mMazeNameLabel.setText(mGameEngine.getMap().getName());
+		
+		mRemainingGoalsLabel = (TextView) findViewById(R.id.remaining_goals);
+		mGameEngine.setRemainingGoalsLabel(mRemainingGoalsLabel);
+		mRemainingGoalsLabel.setText("" + mGameEngine.getMap().getGoalCount());
 		
 		// Create gesture detector to detect flings
 		mGestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
