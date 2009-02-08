@@ -185,7 +185,9 @@ public class TiltMazesActivity extends Activity {
         menu.findItem(MENU_MAP_PREV).setIcon(getResources().getDrawable(android.R.drawable.ic_media_previous));
         menu.findItem(MENU_RESTART).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_rotate));
         menu.findItem(MENU_MAP_NEXT).setIcon(getResources().getDrawable(android.R.drawable.ic_media_next));
-        menu.findItem(MENU_SENSOR).setIcon(getResources().getDrawable(android.R.drawable.button_onoff_indicator_off));
+        menu.findItem(MENU_SENSOR).setIcon(getResources().getDrawable(
+        		mGameEngine.isSensorEnabled() ? android.R.drawable.button_onoff_indicator_on : android.R.drawable.button_onoff_indicator_off
+        	));
         menu.findItem(MENU_SELECT_MAZE).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_more));
         menu.findItem(MENU_ABOUT).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
         
@@ -204,7 +206,12 @@ public class TiltMazesActivity extends Activity {
         case MENU_MAP_NEXT:
         	mGameEngine.sendEmptyMessage(Messages.MSG_MAP_NEXT);
             return true;
-        // TODO MENU_SENSOR
+        case MENU_SENSOR:
+        	mGameEngine.toggleSensorEnabled();
+        	item.setIcon(getResources().getDrawable(
+            		mGameEngine.isSensorEnabled() ? android.R.drawable.button_onoff_indicator_on : android.R.drawable.button_onoff_indicator_off
+            	));
+        	return true;
         case MENU_SELECT_MAZE:
         	startActivityForResult(mSelectMazeIntent, REQUEST_SELECT_MAZE);
         	return true;

@@ -97,7 +97,7 @@ public class SelectMazeActivity extends ListActivity {
 					+ m.getGoalCount() + " goal" + (m.getGoalCount() > 1 ? "s" : "")
 				);
 			mazeNameView.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
-			mazeNameView.setPadding(0, 10, 0, 14);
+			mazeNameView.setPadding(8, 10, 0, 14);
 			return mazeNameView;
 		}
     }

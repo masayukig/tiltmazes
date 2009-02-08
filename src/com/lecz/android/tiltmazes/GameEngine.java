@@ -65,10 +65,14 @@ public class GameEngine {
 	private TextView mRemainingGoalsLabel;
 	private MazeView mMazeView;
 
+	private boolean mSensorEnabled = true;
+	
 	
 	private final SensorListener mSensorAccelerometer = new SensorListener() {
 
 		public void onSensorChanged(int sensor, float[] values) {
+			if (! mSensorEnabled) return;
+			
 			mAccelX = values[0];
 			mAccelY = values[1];
 			mAccelZ = values[2];
@@ -223,6 +227,14 @@ public class GameEngine {
 	
 	public Map getMap() {
 		return mMap;
+	}
+	
+	public boolean isSensorEnabled() {
+		return mSensorEnabled;
+	}
+	
+	public void toggleSensorEnabled() {
+		mSensorEnabled = ! mSensorEnabled;
 	}
 	
 	public void vibrate(long milliseconds) {
