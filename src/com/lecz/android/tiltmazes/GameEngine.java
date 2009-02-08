@@ -43,8 +43,6 @@ import android.widget.TextView;
 
 
 public class GameEngine {
-	private Context mContext;
-	
 	private SensorManager mSensorManager;
 	private Vibrator mVibrator;
 
@@ -97,8 +95,6 @@ public class GameEngine {
 
 	
 	public GameEngine(Context context) {
-		mContext = context;
-		
 		// Request vibrator service
 		mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -162,17 +158,6 @@ public class GameEngine {
 				super.handleMessage(msg);
 			}
 		};
-		
-		// Schedule a redraw at 25Hz
-//		if (DEBUG) {
-//			TimerTask redrawTask = new TimerTask() {
-//				public void run() {
-//					postInvalidate();
-//				}
-//			};
-//			mTimer = new Timer(true);
-//			mTimer.schedule(redrawTask, 0, 1000/*ms*/ / 25);
-//		}	
 	}
 	
 	private void loadMap(int mapID) {

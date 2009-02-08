@@ -40,9 +40,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Button;
 
 
 public class TiltMazesActivity extends Activity {
@@ -66,7 +68,7 @@ public class TiltMazesActivity extends Activity {
 		Log.d(this.toString(), "onCreate() called");
 
 		super.onCreate(savedInstanceState);
-		
+
 		// Build the About Dialog
 		aboutDialog = new Dialog(TiltMazesActivity.this);
 		aboutDialog.setCancelable(true);
@@ -74,7 +76,13 @@ public class TiltMazesActivity extends Activity {
 		aboutDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		aboutDialog.setContentView(R.layout.about_layout);
 
-		
+		Button aboutDialogOkButton = (Button) aboutDialog.findViewById(R.id.about_ok_button);
+		aboutDialogOkButton.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				aboutDialog.cancel();
+			}
+		});
+				
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -194,59 +202,43 @@ public class TiltMazesActivity extends Activity {
     
     @Override
     protected void onStart() {
-		Log.d(this.toString(), "onStart() called");
-
     	// TODO Auto-generated method stub
     	super.onStart();
     }
 
     @Override
     protected void onStop() {
-		Log.d(this.toString(), "onStop() called");
-
     	// TODO Auto-generated method stub
     	super.onStop();
     }
     
     @Override
 	protected void onPause() {
-		Log.d(this.toString(), "onPause() called");
-
 		super.onPause();
 		mGameEngine.unregisterListener();
 	}
 
 	@Override
 	protected void onResume() {
-		Log.d(this.toString(), "onResume() called");
-
 		super.onResume();
 		mGameEngine.registerListener();
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle icicle) {
-		Log.d(this.toString(), "onSaveInstanceState() called");
-
 		super.onSaveInstanceState(icicle);
-
 		mGameEngine.saveState(icicle);
 		mGameEngine.unregisterListener();
 	}
 	
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		Log.d(this.toString(), "onRestoreInstanceState() called");
-
-		super.onRestoreInstanceState(savedInstanceState);
-		
+		super.onRestoreInstanceState(savedInstanceState);		
 		mGameEngine.restoreState(savedInstanceState);
 	}
 
 	@Override
     protected void onDestroy() {
-		Log.d(this.toString(), "onDestroy() called");
-
     	// TODO Auto-generated method stub
     	super.onDestroy();
     }

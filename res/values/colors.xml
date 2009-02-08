@@ -39,11 +39,6 @@
 
 <color name="wall">#B0A5A5</color>
 
-<!--
-<color name="goal">#A030FF</color>
-<color name="goal_shadow">#101050</color>
-<color name="goal_highlight">#0000FF</color>
--->
 <color name="goal_shadow">#601050</color>
 <color name="goal_highlight">#FFC0F0</color>
 

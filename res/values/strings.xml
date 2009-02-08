@@ -38,19 +38,18 @@
 <string name="menu_map_next">Next</string>
 <string name="menu_about">About</string>
 
-<string name="about_text"><b>TiltMazes - A logical puzzle game for Android</b>\n
+<string name="about_text"><b>TiltMazes - A logical puzzle game</b>\n
 <i>Copyright © 2009, Balázs Lécz</i>\n
 \n
-A ball sits in a flat tray containing one or more squares (goals).\n
-The challenge is to guide the ball around the tray and collect all the squares.\n
+A ball sits in a flat tray containing one or more squares (goals). The challenge is
+to guide the ball around the tray and collect all the squares.
 Tilt the phone to start the ball rolling.\n
 The ball rolls in a straight line until it hits a wall, you can then tilt again.\n
 \n
-See the source code at http://code.google.com/p/tiltmazes\n
-\n
-Based on the tilt-maze collection of Andrea Gilbert http://www.clickmazes.com\n
+Based on the 2D tilt-maze collection at http://www.clickmazes.com\n
 Maze designs used with permission.\n
-Maze concepts and designs © Andrea Gilbert &lt;andrea@clickmazes.com>.
+Maze concepts and designs © Andrea Gilbert &lt;andrea@clickmazes.com>.\n
+See the source code at http://code.google.com/p/tiltmazes
 </string>
 
 <string name="maze_label">Maze:</string>
