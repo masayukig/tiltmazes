@@ -33,6 +33,7 @@ package com.lecz.android.tiltmazes;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -53,9 +54,15 @@ public class TiltMazesActivity extends Activity {
 	private static final int MENU_RESTART = 1;
 	private static final int MENU_MAP_PREV = 2;
 	private static final int MENU_MAP_NEXT = 3;
-	private static final int MENU_ABOUT = 4;
+	private static final int MENU_SENSOR = 4;
+	private static final int MENU_SELECT_MAZE = 5;
+	private static final int MENU_ABOUT = 6;
 	
-	private Dialog aboutDialog;
+	private static final int REQUEST_SELECT_MAZE = 1;
+	
+	private Dialog mAboutDialog;
+	
+	private Intent mSelectMazeIntent;
 	
 	private TextView mMazeNameLabel;
 	private TextView mRemainingGoalsLabel;
@@ -69,17 +76,18 @@ public class TiltMazesActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 
+		mSelectMazeIntent = new Intent(TiltMazesActivity.this, SelectMazeActivity.class);
 		// Build the About Dialog
-		aboutDialog = new Dialog(TiltMazesActivity.this);
-		aboutDialog.setCancelable(true);
-		aboutDialog.setCanceledOnTouchOutside(true);
-		aboutDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		aboutDialog.setContentView(R.layout.about_layout);
+		mAboutDialog = new Dialog(TiltMazesActivity.this);
+		mAboutDialog.setCancelable(true);
+		mAboutDialog.setCanceledOnTouchOutside(true);
+		mAboutDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		mAboutDialog.setContentView(R.layout.about_layout);
 
-		Button aboutDialogOkButton = (Button) aboutDialog.findViewById(R.id.about_ok_button);
+		Button aboutDialogOkButton = (Button) mAboutDialog.findViewById(R.id.about_ok_button);
 		aboutDialogOkButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				aboutDialog.cancel();
+				mAboutDialog.cancel();
 			}
 		});
 				
@@ -170,11 +178,15 @@ public class TiltMazesActivity extends Activity {
         menu.add(0, MENU_MAP_PREV, 0, R.string.menu_map_prev);
         menu.add(0, MENU_RESTART, 0, R.string.menu_restart);
         menu.add(0, MENU_MAP_NEXT, 0, R.string.menu_map_next);
+        menu.add(0, MENU_SENSOR, 0, R.string.menu_sensor);
+        menu.add(0, MENU_SELECT_MAZE, 0, R.string.menu_select_maze);
         menu.add(0, MENU_ABOUT, 0, R.string.menu_about);
         
         menu.findItem(MENU_MAP_PREV).setIcon(getResources().getDrawable(android.R.drawable.ic_media_previous));
         menu.findItem(MENU_RESTART).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_rotate));
         menu.findItem(MENU_MAP_NEXT).setIcon(getResources().getDrawable(android.R.drawable.ic_media_next));
+        menu.findItem(MENU_SENSOR).setIcon(getResources().getDrawable(android.R.drawable.button_onoff_indicator_off));
+        menu.findItem(MENU_SELECT_MAZE).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_more));
         menu.findItem(MENU_ABOUT).setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
         
         return true;
@@ -191,13 +203,31 @@ public class TiltMazesActivity extends Activity {
             return true;
         case MENU_MAP_NEXT:
         	mGameEngine.sendEmptyMessage(Messages.MSG_MAP_NEXT);
-            return true;        	
+            return true;
+        // TODO MENU_SENSOR
+        case MENU_SELECT_MAZE:
+        	startActivityForResult(mSelectMazeIntent, REQUEST_SELECT_MAZE);
+        	return true;
         case MENU_ABOUT:
-        	aboutDialog.show();
+        	mAboutDialog.show();
         	return true;
         }	
         
         return false;
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	super.onActivityResult(requestCode, resultCode, data);
+    	
+    	switch (requestCode) {
+    	case (REQUEST_SELECT_MAZE):
+    		if (resultCode == Activity.RESULT_OK) {
+    			int selectedMaze = data.getIntExtra("selected_maze", 0);
+    			mGameEngine.loadMap(selectedMaze);
+    		}
+    		break;
+    	}
     }
     
     @Override

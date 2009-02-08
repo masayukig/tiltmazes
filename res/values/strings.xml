@@ -36,7 +36,11 @@
 <string name="menu_restart">Restart</string>
 <string name="menu_map_prev">Previous</string>
 <string name="menu_map_next">Next</string>
+<string name="menu_select_maze">Select maze</string>
+<string name="menu_sensor">Sensor</string>
 <string name="menu_about">About</string>
+
+<string name="select_maze_title">TiltMazes - Select maze</string>
 
 <string name="about_text"><b>TiltMazes - A logical puzzle game</b>\n
 <i>Copyright © 2009, Balázs Lécz</i>\n

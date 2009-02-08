@@ -44,6 +44,7 @@
         </activity>
         
     
+<activity android:name="SelectMazeActivity" android:excludeFromRecents="true"></activity>
 </application>
 
 <uses-permission android:name="android.permission.VIBRATE"></uses-permission>

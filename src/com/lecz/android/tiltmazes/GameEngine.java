@@ -57,7 +57,8 @@ public class GameEngine {
 	private Map mMap;
 	private Ball mBall;
 	private int mCurrentMap = 0;
-
+	private int mapToLoad = 0;
+	
 	private Direction mCommandedRollDirection = Direction.NONE;
 
 	private TextView mMazeNameLabel;
@@ -138,8 +139,8 @@ public class GameEngine {
 				
 				case Messages.MSG_MAP_PREVIOUS:
 				case Messages.MSG_MAP_NEXT:
-					int mapToLoad = 0;
-					if (msg.what == Messages.MSG_MAP_PREVIOUS) {
+					switch (msg.what) {
+					case (Messages.MSG_MAP_PREVIOUS):
 						if (mCurrentMap == 0) {
 							// Wrap around
 							mapToLoad = MapDesigns.designList.size() - 1;
@@ -147,10 +148,13 @@ public class GameEngine {
 						else {
 							mapToLoad = (mCurrentMap - 1) % MapDesigns.designList.size();
 						}
-					}
-					else {
+						break;
+					
+					case (Messages.MSG_MAP_NEXT):
 						mapToLoad = (mCurrentMap + 1) % MapDesigns.designList.size();
+						break;
 					}
+					
 					loadMap(mapToLoad);
 					return;
 				}
@@ -160,7 +164,7 @@ public class GameEngine {
 		};
 	}
 	
-	private void loadMap(int mapID) {
+	public void loadMap(int mapID) {
 		mCurrentMap = mapID;
 		mMap = new Map(MapDesigns.designList.get(mCurrentMap));
 		mBall.setMap(mMap);
