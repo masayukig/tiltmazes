@@ -35,7 +35,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -72,11 +71,10 @@ public class TiltMazesActivity extends Activity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.d(this.toString(), "onCreate() called");
-
 		super.onCreate(savedInstanceState);
 
 		mSelectMazeIntent = new Intent(TiltMazesActivity.this, SelectMazeActivity.class);
+
 		// Build the About Dialog
 		mAboutDialog = new Dialog(TiltMazesActivity.this);
 		mAboutDialog.setCancelable(true);
@@ -97,6 +95,7 @@ public class TiltMazesActivity extends Activity {
 
 		setContentView(R.layout.game_layout);
 
+		// Set up game engine and connect it with the relevant views
 		mGameEngine = new GameEngine(getApplicationContext());
 		mMazeView = (MazeView) findViewById(R.id.maze_view);
 		mGameEngine.setTiltMazesView(mMazeView);
@@ -106,10 +105,13 @@ public class TiltMazesActivity extends Activity {
 		mMazeNameLabel = (TextView) findViewById(R.id.maze_name);
 		mGameEngine.setMazeNameLabel(mMazeNameLabel);
 		mMazeNameLabel.setText(mGameEngine.getMap().getName());
+		mMazeNameLabel.invalidate();
 		
 		mRemainingGoalsLabel = (TextView) findViewById(R.id.remaining_goals);
 		mGameEngine.setRemainingGoalsLabel(mRemainingGoalsLabel);
-		mRemainingGoalsLabel.setText("" + mGameEngine.getMap().getGoalCount());
+		
+		mGameEngine.restoreState(savedInstanceState);
+		
 		
 		// Create gesture detector to detect flings
 		mGestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
@@ -141,8 +143,6 @@ public class TiltMazesActivity extends Activity {
 			}
 		});
 		mGestureDetector.setIsLongpressEnabled(false);
-		
-		mGameEngine.restoreState(savedInstanceState);
 	}
 
 	@Override

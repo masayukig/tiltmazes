@@ -88,8 +88,16 @@ public class SelectMazeActivity extends ListActivity {
 			else {
 				mazeNameView = (TextView)convertView;
 			}
-			mazeNameView.setText("" + (position + 1) + " - " + MapDesigns.designList.get(position).getName());
+			MapDesign m = MapDesigns.designList.get(position);
+			mazeNameView.setText(""
+					+ (position + 1)
+					+ " - "
+					+ m.getName()
+					+ " (" + m.getSizeX() + "x" + m.getSizeY() + "), "
+					+ m.getGoalCount() + " goal" + (m.getGoalCount() > 1 ? "s" : "")
+				);
 			mazeNameView.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
+			mazeNameView.setPadding(0, 10, 0, 14);
 			return mazeNameView;
 		}
     }

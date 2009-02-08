@@ -79,6 +79,7 @@ public class Map {
 	}
 	
 	public void setGoal(int x, int y, int value) {
+		mGoalCount = mGoalCount - (mGoals[y][x] - value);
 		mGoals[y][x] = value;
 	}
 

@@ -248,24 +248,27 @@ public class GameEngine {
 	}
 	
 	public void restoreState(Bundle icicle) {
-		if (icicle == null) return;
-		
-		int mapID = icicle.getInt("map.id", -1);
-		if (mapID == -1) return;
-		loadMap(mapID);
-
-		int[] goals = icicle.getIntArray("map.goals");
-		if (goals == null) return;
-		
-		int sizeX = mMap.getSizeX();
-		int sizeY = mMap.getSizeY();
-		for (int y = 0; y < sizeY; y++)
-			for (int x = 0; x < sizeX; x++)
-				mMap.setGoal(x, y, goals[y + x * sizeX]);
-		
-		mBall.setX(icicle.getInt("ball.x"));
-		mBall.setY(icicle.getInt("ball.y"));
-		
-		mMazeView.invalidate();
+		if (icicle != null) {		
+			int mapID = icicle.getInt("map.id", -1);
+			if (mapID == -1) return;
+			loadMap(mapID);
+	
+			int[] goals = icicle.getIntArray("map.goals");
+			if (goals == null) return;
+			
+			int sizeX = mMap.getSizeX();
+			int sizeY = mMap.getSizeY();
+			for (int y = 0; y < sizeY; y++)
+				for (int x = 0; x < sizeX; x++)
+					mMap.setGoal(x, y, goals[y + x * sizeX]);
+			
+			mBall.setX(icicle.getInt("ball.x"));
+			mBall.setY(icicle.getInt("ball.y"));
+			
+			// We have probably moved the ball, so invalidate the Maze View 
+			mMazeView.invalidate();
+		}
+		mRemainingGoalsLabel.setText("" + mMap.getGoalCount());
+		mRemainingGoalsLabel.invalidate();
 	}
 }
