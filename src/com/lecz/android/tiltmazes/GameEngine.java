@@ -80,12 +80,12 @@ public class GameEngine {
 			mCommandedRollDirection = Direction.NONE;
 			if (Math.abs(mAccelX) > Math.abs(mAccelY)) {
 				if (mAccelX < -ACCEL_THRESHOLD) mCommandedRollDirection = Direction.LEFT;
-				// FIXME elseif
+				// FIXME(leczbalazs) elseif
 				if (mAccelX >  ACCEL_THRESHOLD) mCommandedRollDirection = Direction.RIGHT;
 			}
 			else {
 				if (mAccelY < -ACCEL_THRESHOLD) mCommandedRollDirection = Direction.DOWN;
-				// FIXME elseif
+				// FIXME(leczbalazs) elseif
 				if (mAccelY >  ACCEL_THRESHOLD) mCommandedRollDirection = Direction.UP;
 			}
 
@@ -135,10 +135,7 @@ public class GameEngine {
 					return;
 				
 				case Messages.MSG_RESTART:
-					mBall.setX(mMap.getInitialPositionX());
-					mBall.setY(mMap.getInitialPositionY());
-					mMap.init();
-					mMazeView.invalidate();
+					loadMap(mCurrentMap);
 					return;
 				
 				case Messages.MSG_MAP_PREVIOUS:

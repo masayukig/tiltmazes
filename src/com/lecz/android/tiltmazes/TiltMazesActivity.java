@@ -69,10 +69,14 @@ public class TiltMazesActivity extends Activity {
 	private GestureDetector mGestureDetector;
 	private GameEngine mGameEngine;
 	
+	private TiltMazesDBAdapter mDB;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		mDB = new TiltMazesDBAdapter(getApplicationContext()).open();
+		
 		mSelectMazeIntent = new Intent(TiltMazesActivity.this, SelectMazeActivity.class);
 
 		// Build the About Dialog
@@ -200,21 +204,26 @@ public class TiltMazesActivity extends Activity {
         case MENU_RESTART:
         	mGameEngine.sendEmptyMessage(Messages.MSG_RESTART);
             return true;
+            
         case MENU_MAP_PREV:
         	mGameEngine.sendEmptyMessage(Messages.MSG_MAP_PREVIOUS);
             return true;
+            
         case MENU_MAP_NEXT:
         	mGameEngine.sendEmptyMessage(Messages.MSG_MAP_NEXT);
             return true;
+            
         case MENU_SENSOR:
         	mGameEngine.toggleSensorEnabled();
         	item.setIcon(getResources().getDrawable(
             		mGameEngine.isSensorEnabled() ? android.R.drawable.button_onoff_indicator_on : android.R.drawable.button_onoff_indicator_off
             	));
         	return true;
+        	
         case MENU_SELECT_MAZE:
         	startActivityForResult(mSelectMazeIntent, REQUEST_SELECT_MAZE);
         	return true;
+        	
         case MENU_ABOUT:
         	mAboutDialog.show();
         	return true;
@@ -239,13 +248,13 @@ public class TiltMazesActivity extends Activity {
     
     @Override
     protected void onStart() {
-    	// TODO Auto-generated method stub
+    	// TODO(leczbalazs) Auto-generated method stub
     	super.onStart();
     }
 
     @Override
     protected void onStop() {
-    	// TODO Auto-generated method stub
+    	// TODO(leczbalazs) Auto-generated method stub
     	super.onStop();
     }
     
@@ -276,7 +285,7 @@ public class TiltMazesActivity extends Activity {
 
 	@Override
     protected void onDestroy() {
-    	// TODO Auto-generated method stub
+    	// TODO(leczbalazs) Auto-generated method stub
     	super.onDestroy();
     }
 }

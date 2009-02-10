@@ -1,16 +1,15 @@
 V1.0 - First Android Market release
 
 TODO:
-
 P1 - Add the following functionality to GameEngine:
 		Save accelerometer enabled/disabled status as a preference
 		Handle SOLVED event
-		Enable/disable accelerometer		
 P1 - Add "solved" detection
 P1 - Display number of steps taken
+		- save solved state for mazes + number of steps taken
 P1 - Create separate layout for landscape mode
 
-P2 - Enable/disable accelerometer ("Tilt sensor" or simply "Tilt")
+P2 - Display About Dialog on first start
 P2 - Add "high-scores" functionality (score = number of steps? time? or 1/(time * steps)?)
 
 P3 - Add proper logging
@@ -20,7 +19,7 @@ P3 - Separate Wall drawing from Ball drawing using FrameLayout
 P4 - Add icon for every level design
 P4 - Correct indentation in .java files
 
-Q: Maybe we could do away with only BOTTOM and RIGHT walls (if boundaries are already handled as walls), but it's not that important
+P5 - Maybe we could do away with only BOTTOM and RIGHT walls (if boundaries are already handled as walls), but it's not that important
 
 Bugs:
 - If started in landscape mode, the acceleration vector is not (always) corrected for rotation
