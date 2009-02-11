@@ -8,6 +8,7 @@ P1 - Add "solved" detection
 P1 - Display number of steps taken
 		- save solved state for mazes + number of steps taken
 P1 - Create separate layout for landscape mode
+P1 - Replace auto-increment id column on the mazes table with one-to-one array index mapping
 
 P2 - Display About Dialog on first start
 P2 - Add "high-scores" functionality (score = number of steps? time? or 1/(time * steps)?)

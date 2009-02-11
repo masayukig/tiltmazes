@@ -2,6 +2,7 @@ package com.lecz.android.tiltmazes;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -12,13 +13,19 @@ public class TiltMazesDBAdapter {
 	private static final String DATABASE_TABLE = "mazes";
 	private static final int DATABASE_VERSION = 1;
 	
-	public static final String KEY_ID = "id";
+	public static final String KEY_ID = "_id";
 	
 	public static final String KEY_NAME = "name";
 	public static final int NAME_COLUMN = 1;
 	
 	public static final String KEY_SOLUTION_STEPS = "solution_steps";
 	public static final int SOLUTION_STEPS_COLUMN = 2;
+	
+	public static final String[] COLUMNS = {
+		KEY_ID,
+		KEY_NAME,
+		KEY_SOLUTION_STEPS,
+	};
 	
 	private SQLiteDatabase mDB;
 	private TiltMazesDBOpenHelper mDBHelper;
@@ -36,11 +43,22 @@ public class TiltMazesDBAdapter {
 		mDB.close();
 	}
 	
-	public void updateMaze(String name, int solution_steps) {
+	public void updateMaze(int id, int solution_steps) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_SOLUTION_STEPS, solution_steps);
 
-		mDB.update(DATABASE_TABLE, values, KEY_NAME + " = ?", new String[]{name});
+		mDB.update(DATABASE_TABLE, values, KEY_ID + " = ?", new String[]{"" + id});
+	}
+	
+	public Cursor allMazes() {
+		return mDB.query(
+				DATABASE_TABLE,
+				COLUMNS,
+				/*selection:*/ null,
+				/*selectionArgs:*/ null,
+				/*groupBy:*/ null,
+				/*having:*/ null,
+				/*orderBy:*/ KEY_ID);
 	}
 	
 	private static class TiltMazesDBOpenHelper extends SQLiteOpenHelper {

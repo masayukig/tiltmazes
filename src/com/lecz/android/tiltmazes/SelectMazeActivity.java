@@ -38,16 +38,40 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 
+
 public class SelectMazeActivity extends ListActivity {
+	private TiltMazesDBAdapter mDB;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
 
-        setListAdapter(new MazeListAdapter(this));
+    	mDB = new TiltMazesDBAdapter(getApplicationContext()).open();
+    	
+        // setListAdapter(new MazeListAdapter(this));
+    	setListAdapter(new SimpleCursorAdapter(
+    			getApplicationContext(),
+    			//android.R.layout.simple_list_item_2,
+    			R.layout.select_maze_row_layout,
+    			mDB.allMazes(),
+    			new String[] {
+    				TiltMazesDBAdapter.KEY_NAME,
+    				TiltMazesDBAdapter.KEY_SOLUTION_STEPS,
+    			},
+    			new int[] {
+    				R.id.maze_name,
+    				R.id.maze_solution_steps,
+    			})
+    	);
+        
         setTitle(R.string.select_maze_title);
         setContentView(R.layout.select_maze_layout);
     }
@@ -60,45 +84,45 @@ public class SelectMazeActivity extends ListActivity {
     	finish();
     }
     
-    private class MazeListAdapter extends BaseAdapter {
-    	
-    	private Context mContext;
-    	
-        public MazeListAdapter(Context context) {
-            mContext = context;
-        }
-
-        public int getCount() {
-            return MapDesigns.designList.size();
-        }
-
-        public Object getItem(int position) {
-            return position;
-        }
-
-        public long getItemId(int position) {
-            return position;
-        }
-
-		public View getView(int position, View convertView, ViewGroup parent) {
-			TextView mazeNameView;
-			if (convertView == null) {
-				mazeNameView = new TextView(mContext);
-			}
-			else {
-				mazeNameView = (TextView)convertView;
-			}
-			MapDesign m = MapDesigns.designList.get(position);
-			mazeNameView.setText(""
-					+ (position + 1)
-					+ " - "
-					+ m.getName()
-					+ " (" + m.getSizeX() + "x" + m.getSizeY() + "), "
-					+ m.getGoalCount() + " goal" + (m.getGoalCount() > 1 ? "s" : "")
-				);
-			mazeNameView.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
-			mazeNameView.setPadding(8, 10, 0, 14);
-			return mazeNameView;
-		}
-    }
+//    private class MazeListAdapter extends BaseAdapter {
+//    	
+//    	private Context mContext;
+//    	
+//        public MazeListAdapter(Context context) {
+//            mContext = context;
+//        }
+//
+//        public int getCount() {
+//            return MapDesigns.designList.size();
+//        }
+//
+//        public Object getItem(int position) {
+//            return position;
+//        }
+//
+//        public long getItemId(int position) {
+//            return position;
+//        }
+//
+//		public View getView(int position, View convertView, ViewGroup parent) {
+//			TextView mazeNameView;
+//			if (convertView == null) {
+//				mazeNameView = new TextView(mContext);
+//			}
+//			else {
+//				mazeNameView = (TextView)convertView;
+//			}
+//			MapDesign m = MapDesigns.designList.get(position);
+//			mazeNameView.setText(""
+//					+ (position + 1)
+//					+ " - "
+//					+ m.getName()
+//					+ " (" + m.getSizeX() + "x" + m.getSizeY() + "), "
+//					+ m.getGoalCount() + " goal" + (m.getGoalCount() > 1 ? "s" : "")
+//				);
+//			mazeNameView.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
+//			mazeNameView.setPadding(8, 10, 0, 14);
+//			return mazeNameView;
+//		}
+//    }
 }
