@@ -27,6 +27,7 @@ P3 - Add proper logging
 
 P4 - Add icon for every level design
 P4 - Correct indentation in .java files
+P4 - Add screenshots to code.google.com/p/tiltmazes project page
 
 P5 - Maybe we could do away with only BOTTOM and RIGHT walls (if boundaries are already handled as walls), but it's not that important
 

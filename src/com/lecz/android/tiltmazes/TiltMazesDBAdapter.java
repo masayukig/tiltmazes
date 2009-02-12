@@ -43,11 +43,19 @@ public class TiltMazesDBAdapter {
 		mDB.close();
 	}
 	
+	// Update "solution steps" column (only if it's 0 or the new value is less then the current)
 	public void updateMaze(int id, int solution_steps) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_SOLUTION_STEPS, solution_steps);
 
-		mDB.update(DATABASE_TABLE, values, KEY_ID + " = ?", new String[]{"" + id});
+		mDB.update(
+			DATABASE_TABLE,
+			values,
+			KEY_ID + " = ? AND ("
+			+ KEY_SOLUTION_STEPS + " = ? OR "
+			+ KEY_SOLUTION_STEPS + " > ?)",
+			new String[]{"" + id, "0", "" + solution_steps}
+		);
 	}
 	
 	public Cursor allMazes() {
@@ -58,7 +66,8 @@ public class TiltMazesDBAdapter {
 				/*selectionArgs:*/ null,
 				/*groupBy:*/ null,
 				/*having:*/ null,
-				/*orderBy:*/ KEY_ID);
+				/*orderBy:*/ KEY_ID
+			);
 	}
 	
 	private static class TiltMazesDBOpenHelper extends SQLiteOpenHelper {
