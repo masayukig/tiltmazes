@@ -57,16 +57,19 @@ public class GameEngine {
 	private Map mMap;
 	private Ball mBall;
 	private int mCurrentMap = 0;
-	private int mapToLoad = 0;
+	private int mMapToLoad = 0;
+	private int mStepCount = 0;
 	
 	private Direction mCommandedRollDirection = Direction.NONE;
 
 	private TextView mMazeNameLabel;
 	private TextView mRemainingGoalsLabel;
+	private TextView mStepsView;
 	private MazeView mMazeView;
 
 	private boolean mSensorEnabled = true;
 	
+	private TiltMazesDBAdapter mDB;
 	
 	private final SensorListener mSensorAccelerometer = new SensorListener() {
 
@@ -100,6 +103,9 @@ public class GameEngine {
 
 	
 	public GameEngine(Context context) {
+		// Open maze database
+		mDB = new TiltMazesDBAdapter(context).open();
+
 		// Request vibrator service
 		mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -128,6 +134,11 @@ public class GameEngine {
 					mRemainingGoalsLabel.setText("" + mMap.getGoalCount());
 					mRemainingGoalsLabel.invalidate();
 					vibrate(100);
+					if (mMap.getGoalCount() == 0) {
+						// Solved!
+						// TODO(leczbalazs): display "Congratulations!" dialog
+						mDB.updateMaze(mCurrentMap, mStepCount);
+					}
 					return;
 				
 				case Messages.MSG_REACHED_WALL:
@@ -144,19 +155,19 @@ public class GameEngine {
 					case (Messages.MSG_MAP_PREVIOUS):
 						if (mCurrentMap == 0) {
 							// Wrap around
-							mapToLoad = MapDesigns.designList.size() - 1;
+							mMapToLoad = MapDesigns.designList.size() - 1;
 						}
 						else {
-							mapToLoad = (mCurrentMap - 1) % MapDesigns.designList.size();
+							mMapToLoad = (mCurrentMap - 1) % MapDesigns.designList.size();
 						}
 						break;
 					
 					case (Messages.MSG_MAP_NEXT):
-						mapToLoad = (mCurrentMap + 1) % MapDesigns.designList.size();
+						mMapToLoad = (mCurrentMap + 1) % MapDesigns.designList.size();
 						break;
 					}
 					
-					loadMap(mapToLoad);
+					loadMap(mMapToLoad);
 					return;
 				}
 					
@@ -173,11 +184,16 @@ public class GameEngine {
 		mBall.setY(mMap.getInitialPositionY());
 		mMap.init();
 		
+		mStepCount = 0;
+		
 		mMazeNameLabel.setText(mMap.getName());
 		mMazeNameLabel.invalidate();
 		
 		mRemainingGoalsLabel.setText("" + mMap.getGoalCount());
 		mRemainingGoalsLabel.invalidate();
+		
+		mStepsView.setText("" + mStepCount);
+		mStepsView.invalidate();
 		
 		mMazeView.calculateUnit();
 		mMazeView.invalidate();		
@@ -195,7 +211,10 @@ public class GameEngine {
 		mMazeView = mazeView;
 		mBall.setMazeView(mazeView);
 	}
-
+	
+	public void setStepsLabel(TextView stepsView) {
+		mStepsView = stepsView;
+	}
 	
 	public void sendEmptyMessage(int msg) {
 		mHandler.sendEmptyMessage(msg);
@@ -215,7 +234,9 @@ public class GameEngine {
 	}
 
 	public void rollBall(Direction dir) {
-		mBall.roll(dir);
+		if (mBall.roll(dir)) mStepCount++;
+		mStepsView.setText("" + mStepCount);
+		mStepsView.invalidate();
 	}
 	
 	public Ball getBall() {
@@ -252,8 +273,12 @@ public class GameEngine {
 				goalsToSave[y + x * sizeX] = goals[y][x];
 		icicle.putIntArray("map.goals", goalsToSave);
 		
+		icicle.putInt("stepcount", mStepCount);
+		
 		icicle.putInt("ball.x", Math.round(mBall.getX()));
 		icicle.putInt("ball.y", Math.round(mBall.getY()));
+		
+		icicle.putBoolean("sensorenabled", mSensorEnabled);
 	}
 	
 	public void restoreState(Bundle icicle) {
@@ -276,8 +301,15 @@ public class GameEngine {
 			
 			// We have probably moved the ball, so invalidate the Maze View 
 			mMazeView.invalidate();
+			
+			mStepCount = icicle.getInt("stepcount", 0);
+			
+			mSensorEnabled = icicle.getBoolean("sensorenabled");
 		}
 		mRemainingGoalsLabel.setText("" + mMap.getGoalCount());
 		mRemainingGoalsLabel.invalidate();
+		
+		mStepsView.setText("" + mStepCount);
+		mStepsView.invalidate();
 	}
 }

@@ -65,17 +65,14 @@ public class TiltMazesActivity extends Activity {
 	
 	private TextView mMazeNameLabel;
 	private TextView mRemainingGoalsLabel;
+	private TextView mStepsLabel;
 
 	private GestureDetector mGestureDetector;
 	private GameEngine mGameEngine;
 	
-	private TiltMazesDBAdapter mDB;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		mDB = new TiltMazesDBAdapter(getApplicationContext()).open();
 		
 		mSelectMazeIntent = new Intent(TiltMazesActivity.this, SelectMazeActivity.class);
 
@@ -113,6 +110,9 @@ public class TiltMazesActivity extends Activity {
 		
 		mRemainingGoalsLabel = (TextView) findViewById(R.id.remaining_goals);
 		mGameEngine.setRemainingGoalsLabel(mRemainingGoalsLabel);
+
+		mStepsLabel = (TextView) findViewById(R.id.steps);
+		mGameEngine.setStepsLabel(mStepsLabel);
 		
 		mGameEngine.restoreState(savedInstanceState);
 		

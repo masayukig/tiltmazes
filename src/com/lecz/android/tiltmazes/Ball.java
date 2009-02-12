@@ -123,9 +123,9 @@ public class Ball {
 		return true;
 	}
 
-	public synchronized void roll(Direction dir) {
+	public synchronized boolean roll(Direction dir) {
 		// Don't accept another roll command if the ball is already rolling
-		if (mIsRolling) return;
+		if (mIsRolling) return false;
 
 		// Set speed according to commanded direction
 		switch (dir) {
@@ -144,7 +144,7 @@ public class Ball {
 		}
 
 		// We can't move
-		if (mXTarget == mX && mYTarget == mY) return;
+		if (mXTarget == mX && mYTarget == mY) return false;
 		
 		// Let's roll...
 		mIsRolling = true;
@@ -159,6 +159,8 @@ public class Ball {
 		};
 		mTimer = new Timer(true);
 		mTimer.schedule(simTask, 0, DT_TARGET);
+		
+		return true;
 	}
 	
 	public void stop() {

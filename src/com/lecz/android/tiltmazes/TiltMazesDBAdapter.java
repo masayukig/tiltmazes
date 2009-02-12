@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 public class TiltMazesDBAdapter {
 	private static final String DATABASE_NAME = "tiltmazes.db";
 	private static final String DATABASE_TABLE = "mazes";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 4;
 	
 	public static final String KEY_ID = "_id";
 	
@@ -84,9 +84,12 @@ public class TiltMazesDBAdapter {
 				ContentValues values = new ContentValues();
 				values.put(KEY_SOLUTION_STEPS, 0);
 
+				int id = 0;
 				for (MapDesign map : MapDesigns.designList) {
+					values.put(KEY_ID, id);
 					values.put(KEY_NAME, map.getName());
 					db.insert(DATABASE_TABLE, null, values);
+					id = id + 1;
 				}
 				
 				db.setTransactionSuccessful();
