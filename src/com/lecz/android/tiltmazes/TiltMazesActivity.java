@@ -103,7 +103,7 @@ public class TiltMazesActivity extends Activity {
 		}
 		
 		// Set up game engine and connect it with the relevant views
-		mGameEngine = new GameEngine(getApplicationContext());
+		mGameEngine = new GameEngine(TiltMazesActivity.this);
 		mMazeView = (MazeView) findViewById(R.id.maze_view);
 		mGameEngine.setTiltMazesView(mMazeView);
 		mMazeView.setGameEngine(mGameEngine);

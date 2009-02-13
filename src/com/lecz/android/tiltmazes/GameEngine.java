@@ -32,7 +32,9 @@
 package com.lecz.android.tiltmazes;
 
 import android.os.Bundle;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Vibrator;
 import android.os.Handler;
 import android.os.Message;
@@ -66,7 +68,10 @@ public class GameEngine {
 	private TextView mRemainingGoalsLabel;
 	private TextView mStepsView;
 	private MazeView mMazeView;
-
+	
+	private final AlertDialog mMazeSolvedDialog;
+	private final AlertDialog mAllMazesSolvedDialog;
+	
 	private boolean mSensorEnabled = true;
 	
 	private TiltMazesDBAdapter mDB;
@@ -122,6 +127,32 @@ public class GameEngine {
 				mMap.getInitialPositionX(),
 				mMap.getInitialPositionY());
 
+		// Congratulations dialog
+		mMazeSolvedDialog = new AlertDialog.Builder(context)
+			.setCancelable(true)
+			.setIcon(android.R.drawable.ic_dialog_info)
+			.setTitle("Congratulations!")
+			.setPositiveButton("Go to next maze!", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                        sendEmptyMessage(Messages.MSG_MAP_NEXT);
+                    }
+                })
+			.create();
+		
+		// Final congratulations dialog
+		mAllMazesSolvedDialog = new AlertDialog.Builder(context)
+			.setCancelable(true)
+			.setIcon(android.R.drawable.ic_dialog_alert)
+			.setTitle("Congratulations!")
+			.setPositiveButton("Go back to first maze!", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                        sendEmptyMessage(Messages.MSG_MAP_NEXT);
+                    }
+                })
+			.create();
+		
 		// Create message handler
 		mHandler = new Handler() {
 			@Override
@@ -137,8 +168,21 @@ public class GameEngine {
 					vibrate(100);
 					if (mMap.getGoalCount() == 0) {
 						// Solved!
-						// TODO(leczbalazs): display "Congratulations!" dialog
 						mDB.updateMaze(mCurrentMap, mStepCount);
+						if (mCurrentMap == (MapDesigns.designList.size() - 1)) {
+							mAllMazesSolvedDialog.setMessage(
+									"Mad props!\nYou have solved all the mazes!\n" +
+									"Now go back and try to solve them in fewer steps! :)");
+							mAllMazesSolvedDialog.show();
+						}
+						else {
+							mMazeSolvedDialog.setMessage(
+									"You have solved maze "
+									+ mMap.getName()
+									+ " in " + mStepCount + " steps."
+								);
+							mMazeSolvedDialog.show();
+						}
 					}
 					return;
 				

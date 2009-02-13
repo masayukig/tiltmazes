@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 public class TiltMazesDBAdapter {
 	private static final String DATABASE_NAME = "tiltmazes.db";
 	private static final String DATABASE_TABLE = "mazes";
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 	
 	public static final String KEY_ID = "_id";
 	public static final int ID_COLUMN = 0;
