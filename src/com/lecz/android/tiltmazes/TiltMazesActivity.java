@@ -96,6 +96,12 @@ public class TiltMazesActivity extends Activity {
 
 		setContentView(R.layout.game_layout);
 
+		// Show the About Dialog on the first start
+		if (getPreferences(MODE_PRIVATE).getBoolean("firststart", true)) {
+			getPreferences(MODE_PRIVATE).edit().putBoolean("firststart", false).commit();
+			mAboutDialog.show();
+		}
+		
 		// Set up game engine and connect it with the relevant views
 		mGameEngine = new GameEngine(getApplicationContext());
 		mMazeView = (MazeView) findViewById(R.id.maze_view);

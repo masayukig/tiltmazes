@@ -14,6 +14,7 @@ public class TiltMazesDBAdapter {
 	private static final int DATABASE_VERSION = 4;
 	
 	public static final String KEY_ID = "_id";
+	public static final int ID_COLUMN = 0;
 	
 	public static final String KEY_NAME = "name";
 	public static final int NAME_COLUMN = 1;
@@ -68,6 +69,25 @@ public class TiltMazesDBAdapter {
 				/*having:*/ null,
 				/*orderBy:*/ KEY_ID
 			);
+	}
+	
+	public int getFirstUnsolved() {
+		Cursor c = mDB.query(
+				DATABASE_TABLE,
+				/*:columns:*/ new String[] {KEY_ID},
+				/*selection:*/ KEY_SOLUTION_STEPS + " = ?",
+				/*selectionArgs:*/ new String[] {"0"},
+				/*groupBy:*/ null,
+				/*having:*/ null,
+				/*orderBy:*/ KEY_ID
+			);
+		
+		if (! c.moveToFirst()) {
+			// There are no more unsolved mazes
+			return 0;
+		}
+		
+		return c.getInt(ID_COLUMN);
 	}
 	
 	private static class TiltMazesDBOpenHelper extends SQLiteOpenHelper {

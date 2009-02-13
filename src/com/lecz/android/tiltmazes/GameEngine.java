@@ -105,7 +105,8 @@ public class GameEngine {
 	public GameEngine(Context context) {
 		// Open maze database
 		mDB = new TiltMazesDBAdapter(context).open();
-
+		mCurrentMap = mDB.getFirstUnsolved();
+		
 		// Request vibrator service
 		mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 

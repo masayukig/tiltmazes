@@ -3,7 +3,6 @@ V1.0 - First Android Market release
 TODO:
 P1 - Save accelerometer enabled/disabled status as a preference
 P1 - Implement "Congratulations!" dialog when user solves a maze
-P1 - Load the first unsolved maze when starting
 P1 - Create separate layout for landscape mode
 
 P2 - Display About Dialog on first start
