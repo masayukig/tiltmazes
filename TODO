@@ -1,6 +1,7 @@
 V1.0 - First Android Market release
 
 TODO:
+P1 - Implement DB migration
 P1 - Save accelerometer enabled/disabled status as a preference	
 P1 - Create separate layout for landscape mode
 

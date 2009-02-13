@@ -10,3 +10,15 @@ Maze designs used with permission.
 Maze concepts and designs © Andrea Gilbert <andrea@clickmazes.com>.
 
 See the source code at http://code.google.com/p/tiltmazes
+
+For Android developers:
+This project demonstrates how to do the following:
+- start a sub-activity (SelectMazeActivity) that returns a result
+- display an Alert Dialog (see GameEngine)
+- display a custom (About) Dialog
+- pass messages to the UI thread
+- add application menu items
+- use built-in icons
+- schedule animation on a separate thread
+- draw using Shader objects
+- move and scale graphics with Matrix objects

@@ -177,7 +177,7 @@ public class TiltMazesActivity extends Activity {
 			return true;
 
 		default:
-			return false;
+			return super.onKeyDown(keyCode, event);
 		}
 	}
 	
