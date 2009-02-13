@@ -1,9 +1,9 @@
 V1.0 - First Android Market release
 
 TODO:
+P1 - Add "number of steps" to the game layout (for solved mazes that is)
 P1 - Implement DB migration
 P1 - Create separate layout for landscape mode
-
 P3 - Name unnamed numeric constants
 P3 - Move strings into resources
 
@@ -12,26 +12,23 @@ Bugs:
 
 
 V1.1 - Bugfix + speedup release
+
 P1 - Fix reported bugs
 P1 - Speed up the code according to suggestions at http://code.google.com/android/toolbox/performance.html
 P1 - Major speed-up: separate Wall drawing from Ball drawing using FrameLayout
-
 P2 - Add "high-scores" functionality (score = number of steps? time? or 1/(time * steps)?)
-
 P3 - Add proper logging
-
 P4 - Add icon for every level design
 P4 - Correct indentation in .java files
-P4 - Add screenshots to code.google.com/p/tiltmazes project page
-
 P5 - Maybe we could do away with only BOTTOM and RIGHT walls (if boundaries are already handled as walls), but it's not that important
 
 
+Planned future releases:
 V2.0 - New features release
-- Add support for tilt puzzles: http://clickmazes.com/newtilt/ixtilt.htm
+P1 - Add support for tilt puzzles: http://clickmazes.com/newtilt/ixtilt.htm
 
 V3.0 - New features release
-- Add support for hexa-roll: http://clickmazes.com/spin/ixspin.htm
+P1 - Add support for hexa-roll: http://clickmazes.com/spin/ixspin.htm
 
 V4.0 - New features release
-- Add mazes from http://www.bekkoame.ne.jp/~ishmnn/java/java.html / "Maze" section
+P1 - Add mazes from http://www.bekkoame.ne.jp/~ishmnn/java/java.html / "Maze" section

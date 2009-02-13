@@ -22,3 +22,5 @@ This project demonstrates how to do the following:
 - schedule animation on a separate thread
 - draw using Shader objects
 - move and scale graphics with Matrix objects
+- handle a simple SQLite database
+- connect a SQLite database table to a ListView
