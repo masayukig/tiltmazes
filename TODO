@@ -4,14 +4,11 @@ TODO:
 P1 - Implement DB migration
 P1 - Create separate layout for landscape mode
 
-P2 - Display About Dialog on first start
-
 P3 - Name unnamed numeric constants
 P3 - Move strings into resources
 
 Bugs:
 - If started in landscape mode, the acceleration vector is not (always) corrected for rotation
-- Ball isRolling and target coordinates are not reset when changing levels -> can be fatal
 
 
 V1.1 - Bugfix + speedup release

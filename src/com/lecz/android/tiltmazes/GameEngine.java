@@ -223,10 +223,13 @@ public class GameEngine {
 	
 	public void loadMap(int mapID) {
 		mCurrentMap = mapID;
+		mBall.stop();
 		mMap = new Map(MapDesigns.designList.get(mCurrentMap));
 		mBall.setMap(mMap);
 		mBall.setX(mMap.getInitialPositionX());
 		mBall.setY(mMap.getInitialPositionY());
+		mBall.setXTarget(mMap.getInitialPositionX());
+		mBall.setYTarget(mMap.getInitialPositionY());
 		mMap.init();
 		
 		mStepCount = 0;

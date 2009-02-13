@@ -260,6 +260,14 @@ public class Ball {
 		mY = y;
 	}
 	
+	public void setXTarget(int x) {
+		mXTarget = x;
+	}
+
+	public void setYTarget(int y) {
+		mYTarget = y;
+	}
+
 	public float getXTarget() {
 		return mXTarget;
 	}	
