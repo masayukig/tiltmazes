@@ -136,8 +136,6 @@ public class MazeView extends View {
 
 	@Override
 	public void onDraw(Canvas canvas) {
-		//if (mGameEngine == null) return;
-		
 		// FPS stats
 		mT2 = SystemClock.elapsedRealtime();
 		long dt = (mT2 - mT1);
@@ -154,7 +152,6 @@ public class MazeView extends View {
 		drawBall(canvas);
 
 		if (DEBUG) {
-			//drawDirection(canvas);
 			// Print FPS
 			paint.setColor(Color.WHITE);
 			paint.setStyle(Style.STROKE);

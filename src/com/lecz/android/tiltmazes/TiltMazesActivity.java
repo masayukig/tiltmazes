@@ -120,7 +120,10 @@ public class TiltMazesActivity extends Activity {
 		mStepsLabel = (TextView) findViewById(R.id.steps);
 		mGameEngine.setStepsLabel(mStepsLabel);
 		
-		mGameEngine.restoreState(savedInstanceState);
+		mGameEngine.restoreState(
+				savedInstanceState,
+				getPreferences(MODE_PRIVATE).getBoolean("sensorenabled", true)
+			);
 		
 		
 		// Create gesture detector to detect flings
@@ -224,6 +227,7 @@ public class TiltMazesActivity extends Activity {
         	item.setIcon(getResources().getDrawable(
             		mGameEngine.isSensorEnabled() ? android.R.drawable.button_onoff_indicator_on : android.R.drawable.button_onoff_indicator_off
             	));
+        	getPreferences(MODE_PRIVATE).edit().putBoolean("sensorenabled", mGameEngine.isSensorEnabled()).commit();
         	return true;
         	
         case MENU_SELECT_MAZE:
@@ -254,13 +258,11 @@ public class TiltMazesActivity extends Activity {
     
     @Override
     protected void onStart() {
-    	// TODO(leczbalazs) Auto-generated method stub
     	super.onStart();
     }
 
     @Override
     protected void onStop() {
-    	// TODO(leczbalazs) Auto-generated method stub
     	super.onStop();
     }
     
@@ -286,12 +288,14 @@ public class TiltMazesActivity extends Activity {
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);		
-		mGameEngine.restoreState(savedInstanceState);
+		mGameEngine.restoreState(
+				savedInstanceState,
+				getPreferences(MODE_PRIVATE).getBoolean("sensorenabled", true)
+			);
 	}
 
 	@Override
     protected void onDestroy() {
-    	// TODO(leczbalazs) Auto-generated method stub
-    	super.onDestroy();
+     	super.onDestroy();
     }
 }

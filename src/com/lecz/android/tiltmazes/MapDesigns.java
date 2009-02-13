@@ -45,6 +45,7 @@ public final class MapDesigns {
 	
 	static {
 		/*
+		// This is the icon (flipped horizontally!)
 		designList.add(new MapDesign(
 			    "Icon",
 			    3, 3,

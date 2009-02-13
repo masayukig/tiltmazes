@@ -322,11 +322,9 @@ public class GameEngine {
 		
 		icicle.putInt("ball.x", Math.round(mBall.getX()));
 		icicle.putInt("ball.y", Math.round(mBall.getY()));
-		
-		icicle.putBoolean("sensorenabled", mSensorEnabled);
 	}
 	
-	public void restoreState(Bundle icicle) {
+	public void restoreState(Bundle icicle, boolean sensorEnabled) {
 		if (icicle != null) {		
 			int mapID = icicle.getInt("map.id", -1);
 			if (mapID == -1) return;
@@ -348,13 +346,13 @@ public class GameEngine {
 			mMazeView.invalidate();
 			
 			mStepCount = icicle.getInt("stepcount", 0);
-			
-			mSensorEnabled = icicle.getBoolean("sensorenabled");
 		}
 		mRemainingGoalsLabel.setText("" + mMap.getGoalCount());
 		mRemainingGoalsLabel.invalidate();
 		
 		mStepsView.setText("" + mStepCount);
 		mStepsView.invalidate();
+		
+		mSensorEnabled = sensorEnabled;
 	}
 }
