@@ -1,3 +1,6 @@
+V1.2
+	- Bugfix: correctly release "wake lock"
+
 V1.1
 	- Bugfix: prevent screen from locking
 	- Bugfix: don't give "mad props" to those who only solve the last maze

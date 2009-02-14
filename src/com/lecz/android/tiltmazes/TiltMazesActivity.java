@@ -80,8 +80,7 @@ public class TiltMazesActivity extends Activity {
 		
 		final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "TiltMazes");
-        mWakeLock.acquire();
-  
+         
 		mSelectMazeIntent = new Intent(TiltMazesActivity.this, SelectMazeActivity.class);
 
 		// Build the About Dialog
@@ -307,6 +306,5 @@ public class TiltMazesActivity extends Activity {
 	@Override
     protected void onDestroy() {
      	super.onDestroy();
-     	mWakeLock.release();
     }
 }
