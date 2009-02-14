@@ -10,8 +10,11 @@ P3 - Move strings into resources
 Bugs:
 - If started in landscape mode, the acceleration vector is not (always) corrected for rotation
 
+V1.1 - Bugfix
+P1 - Fix for autorotate environment
+P1 - Fix mad props bug (only giv mad props if someone solves *all* the mazes)
 
-V1.1 - Bugfix + speedup release
+V1.2 - Bugfix + speedup release
 
 P1 - Fix reported bugs
 P1 - Speed up the code according to suggestions at http://code.google.com/android/toolbox/performance.html

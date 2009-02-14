@@ -145,7 +145,7 @@ public class GameEngine {
 			.setCancelable(true)
 			.setIcon(android.R.drawable.ic_dialog_alert)
 			.setTitle("Congratulations!")
-			.setPositiveButton("Go back to first maze!", new DialogInterface.OnClickListener() {
+			.setPositiveButton("OK!", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();
                         sendEmptyMessage(Messages.MSG_MAP_NEXT);
@@ -169,7 +169,7 @@ public class GameEngine {
 					if (mMap.getGoalCount() == 0) {
 						// Solved!
 						mDB.updateMaze(mCurrentMap, mStepCount);
-						if (mCurrentMap == (MapDesigns.designList.size() - 1)) {
+						if (mDB.unsolvedMazes().getCount() == 0) {
 							mAllMazesSolvedDialog.setMessage(
 									"Mad props!\nYou have solved all the mazes!\n" +
 									"Now go back and try to solve them in fewer steps! :)");

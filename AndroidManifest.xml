@@ -33,7 +33,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lecz.android.tiltmazes" android:versionCode="1" android:versionName="1.0">
+    package="com.lecz.android.tiltmazes" android:versionCode="2" android:versionName="1.1">
 
     <application android:label="TiltMazes" android:icon="@drawable/tiltmazes_icon">
         <activity android:name="TiltMazesActivity" android:launchMode="singleTask">
@@ -47,6 +47,10 @@
 <activity android:name="SelectMazeActivity" android:excludeFromRecents="true"></activity>
 </application>
 
-<uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
+
+
+
+<uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 </manifest>

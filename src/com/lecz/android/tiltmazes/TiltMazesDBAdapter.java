@@ -71,8 +71,8 @@ public class TiltMazesDBAdapter {
 			);
 	}
 	
-	public int getFirstUnsolved() {
-		Cursor c = mDB.query(
+	public Cursor unsolvedMazes() {
+		return mDB.query(
 				DATABASE_TABLE,
 				/*:columns:*/ new String[] {KEY_ID},
 				/*selection:*/ KEY_SOLUTION_STEPS + " = ?",
@@ -81,6 +81,10 @@ public class TiltMazesDBAdapter {
 				/*having:*/ null,
 				/*orderBy:*/ KEY_ID
 			);
+	}
+	
+	public int getFirstUnsolved() {
+		Cursor c = unsolvedMazes();
 		
 		if (! c.moveToFirst()) {
 			// There are no more unsolved mazes

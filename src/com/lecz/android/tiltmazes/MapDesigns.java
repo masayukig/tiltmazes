@@ -742,6 +742,7 @@ public final class MapDesigns {
 	            },
 	            5, 4
 		));
+
 	}
 	
 	private MapDesigns() {

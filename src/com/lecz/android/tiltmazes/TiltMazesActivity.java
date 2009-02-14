@@ -33,8 +33,10 @@ package com.lecz.android.tiltmazes;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -48,6 +50,8 @@ import android.widget.Button;
 
 
 public class TiltMazesActivity extends Activity {
+	protected PowerManager.WakeLock mWakeLock;
+	
 	private MazeView mMazeView;
 	
 	private static final int MENU_RESTART = 1;
@@ -74,6 +78,10 @@ public class TiltMazesActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "TiltMazes");
+        mWakeLock.acquire();
+  
 		mSelectMazeIntent = new Intent(TiltMazesActivity.this, SelectMazeActivity.class);
 
 		// Build the About Dialog
@@ -270,12 +278,14 @@ public class TiltMazesActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		mGameEngine.unregisterListener();
+		mWakeLock.release();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		mGameEngine.registerListener();
+		mWakeLock.acquire();
 	}
 
 	@Override
@@ -297,5 +307,6 @@ public class TiltMazesActivity extends Activity {
 	@Override
     protected void onDestroy() {
      	super.onDestroy();
+     	mWakeLock.release();
     }
 }
